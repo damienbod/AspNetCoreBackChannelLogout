@@ -1,6 +1,8 @@
-# AspNetCoreBackChannelLogout
+# ASP.NET Core BackChannel Logout for Hybrid Clients
 
 ## Setup the database
+
+The Secure Token Service is setup using IdentityServer4 with Identity and Microsoft SQL Server. Change the connection string and initialize the database using EF Core migrations. 
 
 dotnet ef migrations add initSts -c ApplicationDbContext
 
