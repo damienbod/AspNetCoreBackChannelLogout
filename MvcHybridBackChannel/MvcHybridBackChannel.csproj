@@ -6,9 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>    
-    <PackageReference Include="IdentityModel" Version="3.2.0" />
+    <PackageReference Include="IdentityModel" Version="3.10.0" />
 	<PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
-    <PackageReference Include="Microsoft.AspNetCore.App"  />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
   <Target Name="PrepublishScript" BeforeTargets="PrepareForPublish">
