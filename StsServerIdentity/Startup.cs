@@ -79,7 +79,7 @@ namespace StsServerIdentity
             }
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.Configure<StsConfig>(Configuration.GetSection("StsConfig"));
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
@@ -140,13 +140,25 @@ namespace StsServerIdentity
 
             services.AddTransient<IEmailSender, EmailSender>();
 
+            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+
             services.AddIdentityServer()
                 .AddSigningCredential(cert)
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryApiResources(Config.GetApiResources())
                 .AddInMemoryClients(Config.GetClients(stsConfig))
                 .AddAspNetIdentity<ApplicationUser>()
-                .AddProfileService<IdentityWithAdditionalClaimsProfileService>();
+                .AddProfileService<IdentityWithAdditionalClaimsProfileService>()
+                .AddOperationalStore(options =>
+                 {
+                     options.ConfigureDbContext = builder =>
+                         builder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+                             sql => sql.MigrationsAssembly(migrationsAssembly));
+
+                     // this enables automatic token cleanup. this is optional.
+                     options.EnableTokenCleanup = true;
+                     options.TokenCleanupInterval = 30; // interval in seconds
+                 });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
