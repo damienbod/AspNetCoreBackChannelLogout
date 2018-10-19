@@ -1,4 +1,4 @@
-﻿namespace StsServerIdentity.Models
+﻿namespace MvcHybrid
 {
     public class AuthConfiguration
     {
