@@ -1,5 +1,11 @@
 # ASP.NET Core BackChannel Logout for Hybrid Clients
 
+## Original code
+
+The IdentityServer4 samples was used to build this example. The code was updated, but not changed. See this following link for the original:
+
+https://github.com/IdentityServer/IdentityServer4.Samples/tree/release/Clients/src/MvcHybridBackChannel
+
 ## Setup the database
 
 The Secure Token Service is setup using IdentityServer4 with Identity and Microsoft SQL Server. Change the connection string and initialize the database using EF Core migrations. 
