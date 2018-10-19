@@ -10,6 +10,7 @@ https://github.com/IdentityServer/IdentityServer4.Samples/tree/release/Clients/s
 
 The Secure Token Service is setup using IdentityServer4 with Identity and Microsoft SQL Server. Change the connection string and initialize the database using EF Core migrations. 
 
+```
 dotnet ef migrations add initSts -c ApplicationDbContext
 
 dotnet ef migrations add initPersistedGrant -c PersistedGrantDbContext
@@ -17,6 +18,7 @@ dotnet ef migrations add initPersistedGrant -c PersistedGrantDbContext
 dotnet ef database update -c ApplicationDbContext
 
 dotnet ef database update -c PersistedGrantDbContext
+```
 
 ## Links
 
