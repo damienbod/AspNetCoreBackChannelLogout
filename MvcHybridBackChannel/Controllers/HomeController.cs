@@ -38,7 +38,7 @@ namespace MvcHybrid.Controllers
             var disco = await DiscoveryClient.GetAsync(_optionsAuthConfiguration.StsServerIdentityUrl);
             if (disco.IsError) throw new Exception(disco.Error);
 
-            var tokenClient = new TokenClient(disco.TokenEndpoint, "mvc.hybrid", "secret");
+            var tokenClient = new TokenClient(disco.TokenEndpoint, "mvc.hybrid.backchannel", "secret");
             var rt = await HttpContext.GetTokenAsync("refresh_token");
             var tokenResult = await tokenClient.RequestRefreshTokenAsync(rt);
 
