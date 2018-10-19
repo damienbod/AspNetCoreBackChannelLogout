@@ -1,4 +1,4 @@
-# ASP.NET Core BackChannel Logout for Hybrid Clients
+# ASP.NET Core OpenID Connect Back-Channel Logout for Hybrid Clients
 
 ## Original code
 
