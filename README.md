@@ -1,5 +1,7 @@
 # AspNetCoreBackChannelLogout
 
+## Setup the database
+
 dotnet ef migrations add initSts -c ApplicationDbContext
 
 dotnet ef migrations add initPersistedGrant -c PersistedGrantDbContext
@@ -7,3 +9,17 @@ dotnet ef migrations add initPersistedGrant -c PersistedGrantDbContext
 dotnet ef database update -c ApplicationDbContext
 
 dotnet ef database update -c PersistedGrantDbContext
+
+## Links
+
+https://openid.net/specs/openid-connect-backchannel-1_0.html
+
+http://docs.identityserver.io/en/release/topics/signout.html
+
+https://medium.com/@robert.broeckelmann/openid-connect-logout-eccc73df758f
+
+https://medium.com/@piraveenaparalogarajah/openid-connect-back-channel-logout-1-0-fe1f90c83fe5
+
+https://ldapwiki.com/wiki/OpenID%20Connect%20Back-Channel%20Logout
+
+https://datatracker.ietf.org/meeting/97/materials/slides-97-secevent-oidc-logout-01
