@@ -50,6 +50,7 @@ namespace StsServerIdentity
                     AllowAccessTokensViaBrowser = false,
 
                     RedirectUris = { $"{mvcHybridBackchannelClientUrl}/signin-oidc" },
+                    BackChannelLogoutSessionRequired = true,
                     BackChannelLogoutUri = $"{mvcHybridBackchannelClientUrl}/logout",
                     PostLogoutRedirectUris = { $"{mvcHybridBackchannelClientUrl}/signout-callback-oidc" },
 
@@ -78,6 +79,7 @@ namespace StsServerIdentity
 
                     RedirectUris = { $"{mvcHybridBackchannelClientTwoUrl}/signin-oidc" },
                     BackChannelLogoutUri = $"{mvcHybridBackchannelClientTwoUrl}/logout",
+                    BackChannelLogoutSessionRequired = true,
                     PostLogoutRedirectUris = { $"{mvcHybridBackchannelClientTwoUrl}/signout-callback-oidc" },
 
                     AllowOfflineAccess = true,
