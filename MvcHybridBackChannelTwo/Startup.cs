@@ -7,21 +7,40 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 
 namespace MvcHybrid
 {
     public class Startup
     {
-        public Startup()
-        {
+        private readonly IHostingEnvironment _environment;
+        public IConfigurationRoot Configuration { get; }
+
+        public Startup(IHostingEnvironment env)
+        { 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+
+            _environment = env;
+
+            builder.AddEnvironmentVariables();
+            Configuration = builder.Build();
         }
+
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddTransient<CookieEventHandler>();
             services.AddSingleton<LogoutSessionManager>();
+
+            var authConfiguration = Configuration.GetSection("AuthConfiguration");
+            var clientId_aud = authConfiguration["Audience"];
 
             services.AddAuthentication(options =>
             {
@@ -41,7 +60,7 @@ namespace MvcHybrid
                     options.RequireHttpsMetadata = false;
 
                     options.ClientSecret = "secret";
-                    options.ClientId = "mvc.hybrid.backchanneltwo";
+                    options.ClientId = clientId_aud;
 
                     options.ResponseType = "code id_token";
 

@@ -15,9 +15,12 @@ namespace MvcHybrid
     public class Startup
     {
         private readonly IHostingEnvironment _environment;
+        public IConfigurationRoot Configuration { get; }
 
         public Startup(IHostingEnvironment env)
         {
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
@@ -27,18 +30,17 @@ namespace MvcHybrid
 
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
-
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
         }
 
-        public IConfigurationRoot Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddTransient<CookieEventHandler>();
             services.AddSingleton<LogoutSessionManager>();
-            services.Configure<AuthConfiguration>(Configuration.GetSection("AuthConfiguration"));
+
+            var authConfiguration = Configuration.GetSection("AuthConfiguration");
+            var clientId_aud = authConfiguration["Audience"];
 
             services.AddAuthentication(options =>
             {
@@ -58,7 +60,7 @@ namespace MvcHybrid
                     options.RequireHttpsMetadata = false;
 
                     options.ClientSecret = "secret";
-                    options.ClientId = "mvc.hybrid.backchannel";
+                    options.ClientId = clientId_aud;
 
                     options.ResponseType = "code id_token";
 
