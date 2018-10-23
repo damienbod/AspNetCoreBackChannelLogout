@@ -39,6 +39,8 @@ namespace MvcHybrid
             services.AddTransient<CookieEventHandler>();
             services.AddSingleton<LogoutSessionManager>();
 
+            services.Configure<AuthConfiguration>(Configuration.GetSection("AuthConfiguration"));
+
             var authConfiguration = Configuration.GetSection("AuthConfiguration");
             var clientId_aud = authConfiguration["Audience"];
 
