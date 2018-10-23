@@ -65,8 +65,10 @@ namespace MvcHybrid.Controllers
 
             var events = JObject.Parse(eventsJson);
             var logoutEvent = events.TryGetValue("https://schemas.openid.net/event/backchannel-logout");
-            if (logoutEvent == null) throw new Exception("Invalid logout token");
-
+            if (logoutEvent == null)
+            {
+                //throw new Exception("Invalid logout token");
+            }
             return claims;
         }
 
@@ -92,7 +94,7 @@ namespace MvcHybrid.Controllers
             var parameters = new TokenValidationParameters
             {
                 ValidIssuer = disco.Issuer,
-                ValidAudience = "mvc.hybrid.backchannel",
+                ValidAudience = _optionsAuthConfiguration.Audience,
                 IssuerSigningKeys = keys,
 
                 NameClaimType = JwtClaimTypes.Name,

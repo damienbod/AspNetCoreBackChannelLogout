@@ -2,6 +2,7 @@
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
 using System;
@@ -17,8 +18,11 @@ namespace MvcHybrid.Controllers
     {
         public LogoutSessionManager LogoutSessions { get; }
 
-        public LogoutController(LogoutSessionManager logoutSessions)
+        private AuthConfiguration _optionsAuthConfiguration;
+
+        public LogoutController(LogoutSessionManager logoutSessions, IOptions<AuthConfiguration> optionsAuthConfiguration)
         {
+            _optionsAuthConfiguration = optionsAuthConfiguration.Value;
             LogoutSessions = logoutSessions;
         }
 
@@ -61,15 +65,18 @@ namespace MvcHybrid.Controllers
 
             var events = JObject.Parse(eventsJson);
             var logoutEvent = events.TryGetValue("https://schemas.openid.net/event/backchannel-logout");
-            if (logoutEvent == null) throw new Exception("Invalid logout token");
+            if (logoutEvent == null)
+            {
+                //throw new Exception("Invalid logout token");
+            }
 
             return claims;
         }
 
-        private static async Task<ClaimsPrincipal> ValidateJwt(string jwt)
+        private async Task<ClaimsPrincipal> ValidateJwt(string jwt)
         {
             // read discovery document to find issuer and key material
-            var disco = await DiscoveryClient.GetAsync("https://localhost:44318");
+            var disco = await DiscoveryClient.GetAsync(_optionsAuthConfiguration.StsServerIdentityUrl);
 
             var keys = new List<SecurityKey>();
             foreach (var webKey in disco.KeySet.Keys)
@@ -88,7 +95,7 @@ namespace MvcHybrid.Controllers
             var parameters = new TokenValidationParameters
             {
                 ValidIssuer = disco.Issuer,
-                ValidAudience = "mvc.hybrid.backchannel",
+                ValidAudience = _optionsAuthConfiguration.Audience,
                 IssuerSigningKeys = keys,
 
                 NameClaimType = JwtClaimTypes.Name,
