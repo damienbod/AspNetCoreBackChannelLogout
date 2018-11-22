@@ -8,6 +8,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
@@ -17,14 +18,19 @@ namespace MvcHybrid.Controllers
     public class LogoutController : Controller
     {
         public LogoutSessionManager LogoutSessions { get; }
-
         private AuthConfiguration _optionsAuthConfiguration;
+        private readonly HttpClient _httpClient;
 
-        public LogoutController(LogoutSessionManager logoutSessions, IOptions<AuthConfiguration> optionsAuthConfiguration)
+        public LogoutController(
+            LogoutSessionManager logoutSessions,
+            IOptions<AuthConfiguration> optionsAuthConfiguration,
+            IHttpClientFactory httpClientFactory)
         {
             _optionsAuthConfiguration = optionsAuthConfiguration.Value;
             LogoutSessions = logoutSessions;
+            _httpClient = httpClientFactory.CreateClient();
         }
+
 
         [HttpPost]
         [AllowAnonymous]
@@ -75,8 +81,8 @@ namespace MvcHybrid.Controllers
 
         private async Task<ClaimsPrincipal> ValidateJwt(string jwt)
         {
-            // read discovery document to find issuer and key material
-            var disco = await DiscoveryClient.GetAsync(_optionsAuthConfiguration.StsServerIdentityUrl);
+            var disco = await HttpClientDiscoveryExtensions.GetDiscoveryDocumentAsync(
+                _httpClient, _optionsAuthConfiguration.StsServerIdentityUrl);
 
             var keys = new List<SecurityKey>();
             foreach (var webKey in disco.KeySet.Keys)
