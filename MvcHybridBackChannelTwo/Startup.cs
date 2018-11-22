@@ -38,6 +38,7 @@ namespace MvcHybrid
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddTransient<CookieEventHandler>();
             services.AddSingleton<LogoutSessionManager>();
+            services.AddHttpClient();
 
             services.Configure<AuthConfiguration>(Configuration.GetSection("AuthConfiguration"));
 

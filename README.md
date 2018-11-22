@@ -20,6 +20,10 @@ dotnet ef database update -c ApplicationDbContext
 dotnet ef database update -c PersistedGrantDbContext
 ```
 
+## History
+
+2018-11-22 Updated, Nuget packages, npm packages, Logout controller
+
 ## Links
 
 https://openid.net/specs/openid-connect-backchannel-1_0.html
