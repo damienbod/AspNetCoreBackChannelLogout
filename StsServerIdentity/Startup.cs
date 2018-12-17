@@ -23,6 +23,7 @@ using StsServerIdentity.Services;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
+using StsServerIdentity.Filters;
 
 namespace StsServerIdentity
 {
@@ -98,6 +99,7 @@ namespace StsServerIdentity
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddErrorDescriber<StsIdentityErrorDescriber>()
                 .AddDefaultTokenProviders();
 
             services.Configure<RequestLocalizationOptions>(
@@ -110,7 +112,8 @@ namespace StsServerIdentity
                             new CultureInfo("de-CH"),
                             new CultureInfo("it-IT"),
                             new CultureInfo("gsw-CH"),
-                            new CultureInfo("fr-FR")
+                            new CultureInfo("fr-FR"),
+                            new CultureInfo("zh-Hans")
                         };
 
                     options.DefaultRequestCulture = new RequestCulture(culture: "de-DE", uiCulture: "de-DE");
@@ -125,7 +128,10 @@ namespace StsServerIdentity
                     options.RequestCultureProviders.Insert(0, providerQuery);
                 });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new SecurityHeadersAttribute());
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddViewLocalization()
                 .AddDataAnnotationsLocalization(options =>
                 {
@@ -173,10 +179,45 @@ namespace StsServerIdentity
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            app.UseHsts(hsts => hsts.MaxAge(365).IncludeSubdomains());
+            app.UseXContentTypeOptions();
+            app.UseReferrerPolicy(opts => opts.NoReferrer());
+            app.UseXXssProtection(options => options.EnabledWithBlockMode());
+
+            app.UseCsp(opts => opts
+                .BlockAllMixedContent()
+                .StyleSources(s => s.Self())
+                .StyleSources(s => s.UnsafeInline())
+                .FontSources(s => s.Self())
+                .FrameAncestors(s => s.Self())
+                .ImageSources(imageSrc => imageSrc.Self())
+                .ImageSources(imageSrc => imageSrc.CustomSources("data:"))
+                .ScriptSources(s => s.Self())
+                .ScriptSources(s => s.UnsafeInline())
+            );
+
             var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
             app.UseRequestLocalization(locOptions.Value);
 
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                OnPrepareResponse = context =>
+                {
+                    if (context.Context.Response.Headers["feature-policy"].Count == 0)
+                    {
+                        var featurePolicy = "accelerometer 'none'; camera 'none'; geolocation 'none'; gyroscope 'none'; magnetometer 'none'; microphone 'none'; payment 'none'; usb 'none'";
+
+                        context.Context.Response.Headers["feature-policy"] = featurePolicy;
+                    }
+
+                    if (context.Context.Response.Headers["X-Content-Security-Policy"].Count == 0)
+                    {
+                        var csp = "script-src 'self';style-src 'self';img-src 'self' data:;font-src 'self';form-action 'self';frame-ancestors 'self';block-all-mixed-content";
+                        // IE
+                        context.Context.Response.Headers["X-Content-Security-Policy"] = csp;
+                    }
+                }
+            });
             app.UseIdentityServer();
 
             app.UseMvc(routes =>
