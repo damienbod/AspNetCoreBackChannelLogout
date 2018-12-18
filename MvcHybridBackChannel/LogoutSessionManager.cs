@@ -12,6 +12,8 @@ namespace MvcHybrid
     {
         private static Object _lock = new Object();
 
+        private const string redisItemeKey = "logoutSessions";
+
         private readonly ILogger<LogoutSessionManager> _logger;
         private IDistributedCache _cache;
 
@@ -31,10 +33,10 @@ namespace MvcHybrid
 
             lock (_lock)
             {
-                var cdsLogoutSessions = _cache.GetString("cdsLogoutSessions");
-                if (cdsLogoutSessions != null)
+                var logoutSessions = _cache.GetString(redisItemeKey);
+                if (logoutSessions != null)
                 {
-                    _sessions = JsonConvert.DeserializeObject<List<Session>>(cdsLogoutSessions);
+                    _sessions = JsonConvert.DeserializeObject<List<Session>>(logoutSessions);
                 }
 
                 if (!_sessions.Any(s => s.IsMatch(sub, sid)))
@@ -42,13 +44,13 @@ namespace MvcHybrid
                     _sessions.Add(new Session { Sub = sub, Sid = sid });
                 }
 
-                _cache.SetString("cdsLogoutSessions", JsonConvert.SerializeObject(_sessions), options);
+                _cache.SetString(redisItemeKey, JsonConvert.SerializeObject(_sessions), options);
             }
         }
 
         public async Task<bool> IsLoggedOutAsync(string sub, string sid)
         {
-            var cdsLogoutSessions = await _cache.GetStringAsync("cdsLogoutSessions");
+            var cdsLogoutSessions = await _cache.GetStringAsync(redisItemeKey);
             if (cdsLogoutSessions != null)
             {
                 _sessions = JsonConvert.DeserializeObject<List<Session>>(cdsLogoutSessions);
