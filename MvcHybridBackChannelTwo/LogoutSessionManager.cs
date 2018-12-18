@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,17 +10,58 @@ namespace MvcHybrid
 {
     public class LogoutSessionManager
     {
+        private static Object _lock = new Object();
+
+        private readonly ILogger<LogoutSessionManager> _logger;
+        private IDistributedCache _cache;
+
+        public LogoutSessionManager(ILoggerFactory loggerFactory, IDistributedCache cache)
+        {
+            _cache = cache;
+            _logger = loggerFactory.CreateLogger<LogoutSessionManager>();
+        }
+
         // yes - that needs to be thread-safe, distributed etc (it's a sample)
         List<Session> _sessions = new List<Session>();
 
         public void Add(string sub, string sid)
         {
-            _sessions.Add(new Session { Sub = sub, Sid = sid }); 
+            _logger.LogWarning($"Add a logout to the session: sub: {sub}, sid: {sid}");
+            var options = new DistributedCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromSeconds(2000));
+
+            lock (_lock)
+            {
+                var cdsLogoutSessions = _cache.GetString("cdsLogoutSessions");
+                if (cdsLogoutSessions != null)
+                {
+                    _sessions = JsonConvert.DeserializeObject<List<Session>>(cdsLogoutSessions);
+                }
+
+                if (!_sessions.Any(s => s.IsMatch(sub, sid)))
+                {
+                    _sessions.Add(new Session { Sub = sub, Sid = sid });
+                }
+
+                _cache.SetString("cdsLogoutSessions", JsonConvert.SerializeObject(_sessions), options);
+            }
         }
 
-        public bool IsLoggedOut(string sub, string sid)
+        public async Task<bool> IsLoggedOutAsync(string sub, string sid)
         {
+            var cdsLogoutSessions = await _cache.GetStringAsync("cdsLogoutSessions");
+            if (cdsLogoutSessions != null)
+            {
+                _sessions = JsonConvert.DeserializeObject<List<Session>>(cdsLogoutSessions);
+            }
+
+            if (_sessions == null)
+            {
+                _logger.LogWarning($"No Session");
+                _sessions = new List<Session>();
+            }
+
             var matches = _sessions.Any(s => s.IsMatch(sub, sid));
+            _logger.LogWarning($"Logout session exists T/F {matches} : {sub}, sid: {sid}");
             return matches;
         }
 

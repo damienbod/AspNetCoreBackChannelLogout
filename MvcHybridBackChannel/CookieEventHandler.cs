@@ -20,12 +20,10 @@ namespace MvcHybrid
                 var sub = context.Principal.FindFirst("sub")?.Value;
                 var sid = context.Principal.FindFirst("sid")?.Value;
 
-                if (LogoutSessions.IsLoggedOut(sub, sid))
+                if (await LogoutSessions.IsLoggedOutAsync(sub, sid))
                 {
                     context.RejectPrincipal();
-                    await context.HttpContext.SignOutAsync();
-
-                    // todo: if we have a refresh token, it should be revoked here.
+                    await context.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
                 }
             }
         }
