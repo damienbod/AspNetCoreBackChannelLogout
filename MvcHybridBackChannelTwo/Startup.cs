@@ -45,6 +45,12 @@ namespace MvcHybrid
             var authConfiguration = Configuration.GetSection("AuthConfiguration");
             var clientId_aud = authConfiguration["Audience"];
 
+            services.AddDistributedRedisCache(options =>
+            {
+                options.Configuration = Configuration.GetConnectionString("RedisCacheConnection");
+                options.InstanceName = "MvcHybridBackChannelTwoInstance";
+            });
+
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
