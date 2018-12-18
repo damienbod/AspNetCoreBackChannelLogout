@@ -16,8 +16,9 @@ namespace MvcHybrid
         private IDistributedCache _cache;
         private List<Session> _sessions = new List<Session>();
 
-        // This should match the tokens, cookie expiration
-        private const int cacheSlidingExpirationInSeconds = 3600;
+        // Amount of time to check for old sessions. If this is to long, the cache will increase, 
+        // or if you have many user sessions, this will increase to much.
+        private const int cacheExpirationInDays = 8;
 
         public LogoutSessionManager(ILoggerFactory loggerFactory, IDistributedCache cache)
         {
@@ -28,7 +29,7 @@ namespace MvcHybrid
         public void Add(string sub, string sid)
         {
             _logger.LogWarning($"Add a logout to the session: sub: {sub}, sid: {sid}");
-            var options = new DistributedCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromSeconds(cacheSlidingExpirationInSeconds));
+            var options = new DistributedCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromDays(cacheExpirationInDays));
 
             lock (_lock)
             {
@@ -44,7 +45,7 @@ namespace MvcHybrid
                 }
 
                 // remove all items which are older than an hour
-                _sessions.RemoveAll(t => t.Created < DateTime.UtcNow.AddSeconds(-cacheSlidingExpirationInSeconds));
+                _sessions.RemoveAll(t => t.Created < DateTime.UtcNow.AddDays(-cacheExpirationInDays));
 
                 _cache.SetString(redisItemeKey, JsonConvert.SerializeObject(_sessions), options);
             }
