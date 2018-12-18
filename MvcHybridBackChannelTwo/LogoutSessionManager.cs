@@ -10,21 +10,17 @@ namespace MvcHybrid
 {
     public class LogoutSessionManager
     {
-        private static Object _lock = new Object();
-
+        private static readonly Object _lock = new Object();
         private const string redisItemeKey = "logoutSessions";
-
         private readonly ILogger<LogoutSessionManager> _logger;
         private IDistributedCache _cache;
+        private List<Session> _sessions = new List<Session>();
 
         public LogoutSessionManager(ILoggerFactory loggerFactory, IDistributedCache cache)
         {
             _cache = cache;
             _logger = loggerFactory.CreateLogger<LogoutSessionManager>();
         }
-
-        // yes - that needs to be thread-safe, distributed etc (it's a sample)
-        List<Session> _sessions = new List<Session>();
 
         public void Add(string sub, string sid)
         {
