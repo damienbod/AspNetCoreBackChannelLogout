@@ -16,6 +16,9 @@ namespace MvcHybrid
         private IDistributedCache _cache;
         private List<Session> _sessions = new List<Session>();
 
+        // This should match the tokens, cookie expiration
+        private const int cacheSlidingExpirationInSeconds = 3600;
+
         public LogoutSessionManager(ILoggerFactory loggerFactory, IDistributedCache cache)
         {
             _cache = cache;
@@ -25,7 +28,7 @@ namespace MvcHybrid
         public void Add(string sub, string sid)
         {
             _logger.LogWarning($"Add a logout to the session: sub: {sub}, sid: {sid}");
-            var options = new DistributedCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromSeconds(2000));
+            var options = new DistributedCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromSeconds(cacheSlidingExpirationInSeconds));
 
             lock (_lock)
             {
