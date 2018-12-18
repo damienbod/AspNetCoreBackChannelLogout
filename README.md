@@ -22,6 +22,8 @@ dotnet ef database update -c PersistedGrantDbContext
 
 ## History
 
+2018-12-18 Added Azure Redis Cache, support for multi instance backchannel logout
+
 2018-11-22 Updated, Nuget packages, npm packages, Logout controller
 
 ## Links
