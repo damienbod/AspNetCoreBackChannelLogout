@@ -6,9 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>    
-    <PackageReference Include="IdentityModel" Version="3.10.2" />
+    <PackageReference Include="IdentityModel" Version="3.10.4" />
 	<PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
