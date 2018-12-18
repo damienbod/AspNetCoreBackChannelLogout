@@ -45,11 +45,19 @@ namespace MvcHybrid
             var authConfiguration = Configuration.GetSection("AuthConfiguration");
             var clientId_aud = authConfiguration["Audience"];
 
-            services.AddDistributedRedisCache(options =>
+            if(_environment.IsDevelopment())
             {
-                options.Configuration = Configuration.GetConnectionString("RedisCacheConnection");
-                options.InstanceName = "MvcHybridBackChannelTwoInstance";
-            });
+                // remove this, if your use a proper development cache hich uses the same as the production
+                services.AddDistributedMemoryCache();
+            }
+            else
+            {
+                services.AddDistributedRedisCache(options =>
+                {
+                    options.Configuration = Configuration.GetConnectionString("RedisCacheConnection");
+                    options.InstanceName = "MvcHybridBackChannelTwoInstance";
+                });
+            }
 
             services.AddAuthentication(options =>
             {
