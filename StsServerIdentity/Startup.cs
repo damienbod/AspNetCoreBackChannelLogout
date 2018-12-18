@@ -24,6 +24,7 @@ using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
 using StsServerIdentity.Filters;
+using IdentityServer4.Validation;
 
 namespace StsServerIdentity
 {
@@ -84,6 +85,8 @@ namespace StsServerIdentity
 
             services.Configure<StsConfig>(Configuration.GetSection("StsConfig"));
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
+
+            services.AddTransient<IEndSessionRequestValidator, MyEndSessionRequestValidator>();
 
             services.AddSingleton<LocService>();
             services.AddLocalization(options => options.ResourcesPath = "Resources");
