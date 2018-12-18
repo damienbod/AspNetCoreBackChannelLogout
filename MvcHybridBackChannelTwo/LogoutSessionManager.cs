@@ -40,8 +40,11 @@ namespace MvcHybrid
 
                 if (!_sessions.Any(s => s.IsMatch(sub, sid)))
                 {
-                    _sessions.Add(new Session { Sub = sub, Sid = sid });
+                    _sessions.Add(new Session { Sub = sub, Sid = sid, Created = DateTime.UtcNow });
                 }
+
+                // remove all items which are older than an hour
+                _sessions.RemoveAll(t => t.Created < DateTime.UtcNow.AddSeconds(-cacheSlidingExpirationInSeconds));
 
                 _cache.SetString(redisItemeKey, JsonConvert.SerializeObject(_sessions), options);
             }
@@ -68,6 +71,7 @@ namespace MvcHybrid
 
         private class Session
         {
+            public DateTime Created { get; set; }
             public string Sub { get; set; }
             public string Sid { get; set; }
 
