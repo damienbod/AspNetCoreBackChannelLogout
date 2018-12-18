@@ -21,8 +21,6 @@ using StsServerIdentity.Data;
 using StsServerIdentity.Resources;
 using StsServerIdentity.Services;
 using Microsoft.IdentityModel.Tokens;
-using Serilog;
-using Serilog.Sinks.SystemConsole.Themes;
 using StsServerIdentity.Filters;
 using IdentityServer4.Validation;
 
