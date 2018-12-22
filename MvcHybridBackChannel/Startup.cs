@@ -38,7 +38,7 @@ namespace MvcHybrid
             services.Configure<AuthConfiguration>(Configuration.GetSection("AuthConfiguration"));
 
             var authConfiguration = Configuration.GetSection("AuthConfiguration");
-            var clientId_aud = authConfiguration["Audience"];
+            var clientId_aud = authConfiguration["Audience"]; 
 
             if (_environment.IsDevelopment())
             {
@@ -68,12 +68,10 @@ namespace MvcHybrid
             })
             .AddOpenIdConnect("oidc", options =>
             {
-                options.Authority = "https://localhost:44318";
+                options.Authority = authConfiguration["StsServerIdentityUrl"];
                 options.RequireHttpsMetadata = false;
-
-                options.ClientSecret = "secret";
+                options.ClientSecret = Configuration["SecretMvcHybridBackChannel"];
                 options.ClientId = clientId_aud;
-
                 options.ResponseType = "code id_token";
 
                 options.Scope.Clear();
