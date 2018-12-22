@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Azure.KeyVault;
+using Microsoft.Azure.Services.AppAuthentication;
+using Microsoft.Extensions.Configuration;
 using Serilog;
 using Serilog.Events;
 using System;
@@ -35,6 +38,15 @@ namespace MvcHybrid
         }
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+            .ConfigureAppConfiguration((context, config) =>
+            {
+                var builder = config.Build();
+                var keyVaultEndpoint = builder["AzureKeyVaultEndpoint"];
+                var azureServiceTokenProvider = new AzureServiceTokenProvider();
+                var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback));
+
+                config.AddAzureKeyVault(keyVaultEndpoint);
+            })
             .UseStartup<Startup>()
             .UseKestrel(c => c.AddServerHeader = false)
             .UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration

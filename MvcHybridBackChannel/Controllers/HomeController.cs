@@ -29,19 +29,10 @@ namespace MvcHybrid.Controllers
             _optionsAuthConfiguration = optionsAuthConfiguration.Value;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var azureServiceTokenProvider = new AzureServiceTokenProvider();
-            var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback));
-            var secret = await keyVaultClient.GetSecretAsync("https://damienbodkeyvault.vault.azure.net/secrets/Test/46fa28689a494f96879d5fa18870fa21");
-
-            var secrets = await keyVaultClient.GetSecretsAsync("https://damienbodkeyvault.vault.azure.net");
-
             var cs = _configuration["Test"];
-
-            var data = secret.Value;
-
-            return View("Index", data + ":" + cs);
+            return View("Index",  cs);
         }
 
         [Authorize]
