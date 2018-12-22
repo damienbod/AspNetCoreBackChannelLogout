@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.AzureKeyVault;
+using Microsoft.Azure.Services.AppAuthentication;
+using Microsoft.Azure.KeyVault;
 
 namespace MvcHybrid
 {
@@ -29,14 +32,20 @@ namespace MvcHybrid
             _environment = env;
 
             builder.AddEnvironmentVariables();
-
             Configuration = builder.Build();
 
-            builder.AddAzureKeyVault(
-                $"https://{Configuration["AzureKeyVault:Vault"]}.vault.azure.net/",
-                Configuration["AzureKeyVault:ClientId"],
-                Configuration["AzureKeyVault:ClientSecret"]
-            );
+            var keyVaultEndpoint = "https://damienbodkeyvault.vault.azure.net/"; //Configuration["AzureKeyVaultEndpoint"];
+            var azureServiceTokenProvider = new AzureServiceTokenProvider();
+            var keyVaultClient = new KeyVaultClient(
+                new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback));
+            builder.AddAzureKeyVault(keyVaultEndpoint, keyVaultClient, new DefaultKeyVaultSecretManager());
+            //if (!string.IsNullOrEmpty(keyVaultEndpoint))
+            //{
+            //    var azureServiceTokenProvider = new AzureServiceTokenProvider();
+            //    var keyVaultClient = new KeyVaultClient(
+            //        new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback));
+            //    builder.AddAzureKeyVault(keyVaultEndpoint, keyVaultClient, new DefaultKeyVaultSecretManager());
+            //}
         }
 
         public void ConfigureServices(IServiceCollection services)

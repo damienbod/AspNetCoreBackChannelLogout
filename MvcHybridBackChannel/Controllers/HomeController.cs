@@ -12,6 +12,8 @@ using System.Globalization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Azure.Services.AppAuthentication;
+using Microsoft.Azure.KeyVault;
 
 namespace MvcHybrid.Controllers
 {
@@ -27,9 +29,14 @@ namespace MvcHybrid.Controllers
             _optionsAuthConfiguration = optionsAuthConfiguration.Value;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View("Index", _configuration["Test"]);
+            var azureServiceTokenProvider = new AzureServiceTokenProvider();
+            var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback));
+            var secret = await keyVaultClient.GetSecretAsync("https://damienbodkeyvault.vault.azure.net/secrets/Test/46fa28689a494f96879d5fa18870fa21").ConfigureAwait(false);
+            var data = secret.Value;
+
+            return View("Index", data);
         }
 
         [Authorize]
