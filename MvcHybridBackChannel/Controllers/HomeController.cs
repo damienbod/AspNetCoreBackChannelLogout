@@ -33,7 +33,7 @@ namespace MvcHybrid.Controllers
         {
             var azureServiceTokenProvider = new AzureServiceTokenProvider();
             var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback));
-            var secret = await keyVaultClient.GetSecretAsync("https://damienbodkeyvault.vault.azure.net/secrets/Test/46fa28689a494f96879d5fa18870fa21").ConfigureAwait(false);
+            var secret = await keyVaultClient.GetSecretAsync("https://damienbodkeyvault.vault.azure.net/secrets/Test/46fa28689a494f96879d5fa18870fa21");
             var data = secret.Value;
 
             return View("Index", data);
