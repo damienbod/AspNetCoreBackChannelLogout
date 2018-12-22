@@ -34,11 +34,17 @@ namespace MvcHybrid
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
 
-            var keyVaultEndpoint = "https://damienbodkeyvault.vault.azure.net/"; //Configuration["AzureKeyVaultEndpoint"];
+            if (env.IsDevelopment())
+            {
+                builder.AddUserSecrets<Startup>();
+            }
+
+            var keyVaultEndpoint = Configuration["AzureKeyVaultEndpoint"];
             var azureServiceTokenProvider = new AzureServiceTokenProvider();
             var keyVaultClient = new KeyVaultClient(
                 new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback));
             builder.AddAzureKeyVault(keyVaultEndpoint, keyVaultClient, new DefaultKeyVaultSecretManager());
+
             //if (!string.IsNullOrEmpty(keyVaultEndpoint))
             //{
             //    var azureServiceTokenProvider = new AzureServiceTokenProvider();
