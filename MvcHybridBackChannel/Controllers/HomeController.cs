@@ -11,6 +11,9 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System.Globalization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Azure.Services.AppAuthentication;
+using Microsoft.Azure.KeyVault;
 
 namespace MvcHybrid.Controllers
 {
@@ -18,13 +21,18 @@ namespace MvcHybrid.Controllers
     {
         private AuthConfiguration _optionsAuthConfiguration;
 
-        public HomeController(IOptions<AuthConfiguration> optionsAuthConfiguration)
+        private IConfiguration _configuration;
+
+        public HomeController(IOptions<AuthConfiguration> optionsAuthConfiguration, IConfiguration configuration)
         {
+            _configuration = configuration;
             _optionsAuthConfiguration = optionsAuthConfiguration.Value;
         }
+
         public IActionResult Index()
         {
-            return View();
+            var cs = _configuration["Test"];
+            return View("Index",  cs);
         }
 
         [Authorize]

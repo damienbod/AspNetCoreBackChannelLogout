@@ -9,29 +9,24 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.AzureKeyVault;
+using Microsoft.Azure.Services.AppAuthentication;
+using Microsoft.Azure.KeyVault;
 
 namespace MvcHybrid
 {
     public class Startup
     {
         private readonly IHostingEnvironment _environment;
-        public IConfigurationRoot Configuration { get; }
+        //public IConfigurationRoot Configuration { get; }
+        public IConfiguration Configuration { get; }
 
-        public Startup(IHostingEnvironment env)
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
-
+            Configuration = configuration;
             _environment = env;
-
-            builder.AddEnvironmentVariables();
-            Configuration = builder.Build();
         }
-
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -43,7 +38,7 @@ namespace MvcHybrid
             services.Configure<AuthConfiguration>(Configuration.GetSection("AuthConfiguration"));
 
             var authConfiguration = Configuration.GetSection("AuthConfiguration");
-            var clientId_aud = authConfiguration["Audience"];
+            var clientId_aud = authConfiguration["Audience"]; 
 
             if (_environment.IsDevelopment())
             {
@@ -64,41 +59,39 @@ namespace MvcHybrid
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = "oidc";
             })
-                .AddCookie(options =>
+            .AddCookie(options =>
+            {
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                options.Cookie.Name = "mvchybridbc";
+
+                options.EventsType = typeof(CookieEventHandler);
+            })
+            .AddOpenIdConnect("oidc", options =>
+            {
+                options.Authority = authConfiguration["StsServerIdentityUrl"];
+                options.RequireHttpsMetadata = false;
+                options.ClientSecret = Configuration["SecretMvcHybridBackChannel"];
+                options.ClientId = clientId_aud;
+                options.ResponseType = "code id_token";
+
+                options.Scope.Clear();
+                options.Scope.Add("openid");
+                options.Scope.Add("profile");
+                options.Scope.Add("email");
+                options.Scope.Add("offline_access");
+
+                options.ClaimActions.Remove("amr");
+                options.ClaimActions.MapJsonKey("website", "website");
+
+                options.GetClaimsFromUserInfoEndpoint = true;
+                options.SaveTokens = true;
+
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-                    options.Cookie.Name = "mvchybridbc";
-
-                    options.EventsType = typeof(CookieEventHandler);
-                })
-                .AddOpenIdConnect("oidc", options =>
-                {
-                    options.Authority = "https://localhost:44318";
-                    options.RequireHttpsMetadata = false;
-
-                    options.ClientSecret = "secret";
-                    options.ClientId = clientId_aud;
-
-                    options.ResponseType = "code id_token";
-
-                    options.Scope.Clear();
-                    options.Scope.Add("openid");
-                    options.Scope.Add("profile");
-                    options.Scope.Add("email");
-                    options.Scope.Add("offline_access");
-
-                    options.ClaimActions.Remove("amr");
-                    options.ClaimActions.MapJsonKey("website", "website");
-
-                    options.GetClaimsFromUserInfoEndpoint = true;
-                    options.SaveTokens = true;
-
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        NameClaimType = JwtClaimTypes.Name,
-                        RoleClaimType = JwtClaimTypes.Role,
-                    };
-                });
+                    NameClaimType = JwtClaimTypes.Name,
+                    RoleClaimType = JwtClaimTypes.Role,
+                };
+            });
         }
 
         public void Configure(IApplicationBuilder app)
