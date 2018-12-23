@@ -2,7 +2,11 @@
 
 ## Blogs
 
+### OpenID Connect back-channel logout using Azure Redis Cache and IdentityServer4
 https://damienbod.com/2018/12/18/openid-connect-back-channel-logout-using-azure-redis-cache-and-identityserver4/
+
+### Using Azure Key Vault with ASP.NET Core and Azure App Services
+https://damienbod.com/2018/12/23/using-azure-key-vault-with-asp-net-core-and-azure-app-services/
 
 ## Original code
 
