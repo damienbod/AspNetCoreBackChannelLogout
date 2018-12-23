@@ -1,5 +1,9 @@
 # ASP.NET Core OpenID Connect Back-Channel Logout for Hybrid Clients
 
+## Blogs
+
+https://damienbod.com/2018/12/18/openid-connect-back-channel-logout-using-azure-redis-cache-and-identityserver4/
+
 ## Original code
 
 The IdentityServer4 samples was used to build this example. The code was updated, but not changed. See this following link for the original:
@@ -21,6 +25,8 @@ dotnet ef database update -c PersistedGrantDbContext
 ```
 
 ## History
+
+2018-12-23 Adding Key Vault to MvcHybridBackChannel
 
 2018-12-18 Added Azure Redis Cache, support for multi instance OIDC backchannel logout
 
