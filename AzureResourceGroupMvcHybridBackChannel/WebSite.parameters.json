@@ -1,0 +1,20 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "hostingPlanName": {
+      "value": "mvchybrid2-hp"
+    },
+    "skuName": {
+      "value": "B1"
+    },
+    "clientSecret": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/1f943d6c-66d4-4c2f-a158-e6b99fcec7a2/resourceGroups/damienbod-rg/providers/Microsoft.KeyVault/vaults/damienbodKeyVault"
+        },
+        "secretName": "SecretMvcHybridBackChannel2"
+      }
+    }
+  }
+}

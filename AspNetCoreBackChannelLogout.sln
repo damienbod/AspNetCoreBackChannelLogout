@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "AzureResourceGroupMvcHybridBackChannel", "AzureResourceGroupMvcHybridBackChannel\AzureResourceGroupMvcHybridBackChannel.deployproj", "{DED60CCB-4C2B-4B8B-96ED-CF722E029E3B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{5920113D-C5A5-41D2-9363-F998FFE6B830}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5920113D-C5A5-41D2-9363-F998FFE6B830}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5920113D-C5A5-41D2-9363-F998FFE6B830}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DED60CCB-4C2B-4B8B-96ED-CF722E029E3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DED60CCB-4C2B-4B8B-96ED-CF722E029E3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DED60CCB-4C2B-4B8B-96ED-CF722E029E3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DED60CCB-4C2B-4B8B-96ED-CF722E029E3B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
