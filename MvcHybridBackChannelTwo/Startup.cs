@@ -73,10 +73,10 @@ namespace MvcHybrid
                 })
                 .AddOpenIdConnect("oidc", options =>
                 {
-                    options.Authority = "https://localhost:44318";
+                    options.Authority = authConfiguration["StsServerIdentityUrl"];
                     options.RequireHttpsMetadata = false;
 
-                    options.ClientSecret = "secret";
+                    options.ClientSecret = Configuration["ClientSecret"]; ;
                     options.ClientId = clientId_aud;
 
                     options.ResponseType = "code id_token";
