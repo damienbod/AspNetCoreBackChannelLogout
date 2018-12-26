@@ -15,6 +15,14 @@
         },
         "secretName": "SecretMvcHybridBackChannel2"
       }
+    },
+    "redisCacheConnection": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/1f943d6c-66d4-4c2f-a158-e6b99fcec7a2/resourceGroups/damienbod-rg/providers/Microsoft.KeyVault/vaults/damienbodKeyVault"
+        },
+        "secretName": "ConnectionStrings--RedisCacheConnection"
+      }
     }
   }
 }

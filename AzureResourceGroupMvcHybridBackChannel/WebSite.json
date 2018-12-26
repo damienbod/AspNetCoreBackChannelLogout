@@ -9,6 +9,9 @@
     "clientSecret": {
       "type": "securestring"
     },
+    "redisCacheConnection": {
+      "type": "securestring"
+    },
     "skuName": {
       "type": "string",
       "defaultValue": "B1",
@@ -88,7 +91,8 @@
           },
           "properties": {
             "ClientSecret": "[parameters('clientSecret')]",
-            "AuthConfiguration:StsServerIdentityUrl": "https//localhost:44318"
+            "AuthConfiguration:StsServerIdentityUrl": "https//localhost:44318",
+            "ConnectionStrings:RedisCacheConnection": "[parameters('redisCacheConnection')]"
           }
         }
       ]
