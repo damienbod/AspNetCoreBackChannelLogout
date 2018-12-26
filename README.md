@@ -30,6 +30,8 @@ dotnet ef database update -c PersistedGrantDbContext
 
 ## History
 
+2018-12-26 Adding ARM template to set key vault secrets
+
 2018-12-23 Adding Key Vault to the MvcHybridBackChannel project
 
 2018-12-18 Added Azure Redis Cache, support for multi instance OIDC backchannel logout
