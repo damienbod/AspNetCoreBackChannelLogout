@@ -9,7 +9,7 @@
 
 </ul>
 
-## Original code
+## Original code for Backchannel Logout
 
 The IdentityServer4 samples was used to build this example. The code was updated, but not changed. See this following link for the original:
 
