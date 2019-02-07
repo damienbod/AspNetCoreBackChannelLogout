@@ -13,16 +13,20 @@ namespace ConsoleStandaloneUsingAzureSecrets
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Start Application and get key vault values");
 
             GetConfigurationsForEnvironment();
 
+            Console.WriteLine("Read Configurations");
+
             SetupServices();
+
+            Console.WriteLine("Services ready");
 
             // read config value
             var someSecret = _config["SomeSecret"];
 
-            Console.WriteLine($"Read from key vault: {someSecret}");
+            Console.WriteLine($"Read from configuration: {someSecret}");
             Console.ReadLine();
         }
 
@@ -41,7 +45,7 @@ namespace ConsoleStandaloneUsingAzureSecrets
             var location = Assembly.GetEntryAssembly().Location;
             var directory = Path.GetDirectoryName(location);
 
-            Console.WriteLine($"{directory}{Path.DirectorySeparatorChar}appsettings.json");
+            Console.WriteLine($"appsettings.json found");
             Console.WriteLine($"{environmentName}");
 
             var configBuilder = new ConfigurationBuilder()
