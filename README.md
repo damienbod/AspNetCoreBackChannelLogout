@@ -2,13 +2,14 @@
 
 ## Blogs
 
-### OpenID Connect back-channel logout using Azure Redis Cache and IdentityServer4
-https://damienbod.com/2018/12/18/openid-connect-back-channel-logout-using-azure-redis-cache-and-identityserver4/
+<ul>
+	<li><a href="https://damienbod.com/2018/12/18/openid-connect-back-channel-logout-using-azure-redis-cache-and-identityserver4/">OpenID Connect back-channel logout using Azure Redis Cache and IdentityServer4</a></li>
+	<li><a href="https://damienbod.com/2018/12/23/using-azure-key-vault-with-asp-net-core-and-azure-app-services/">Using Azure Key Vault with ASP.NET Core and Azure App Services</a></li>
+	<li><a href="https://damienbod.com/2019/01/07/deploying-asp-net-core-app-services-using-azure-key-vault-and-azure-resource-manager-templates/">Deploying ASP.NET Core App Services using Azure Key Vault and Azure Resource Manager templates</a></li>
 
-### Using Azure Key Vault with ASP.NET Core and Azure App Services
-https://damienbod.com/2018/12/23/using-azure-key-vault-with-asp-net-core-and-azure-app-services/
+</ul>
 
-## Original code
+## Original code for Backchannel Logout
 
 The IdentityServer4 samples was used to build this example. The code was updated, but not changed. See this following link for the original:
 
