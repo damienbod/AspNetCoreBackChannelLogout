@@ -30,6 +30,8 @@ dotnet ef database update -c PersistedGrantDbContext
 
 ## History
 
+2019-02-07 Added Standalone application example using Azure Key Valult
+
 2018-12-26 Adding ARM template to set key vault secrets
 
 2018-12-23 Adding Key Vault to the MvcHybridBackChannel project
