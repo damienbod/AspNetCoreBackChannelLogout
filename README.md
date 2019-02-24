@@ -31,7 +31,7 @@ dotnet ef database update -c PersistedGrantDbContext
 
 ## History
 
-2019-02-24 Updated npm packages
+2019-02-24 Updated npm packages, removing obsolete APIs
 
 2019-02-07 Added Standalone application example using Azure Key Vault
 
