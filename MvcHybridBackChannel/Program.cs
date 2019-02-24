@@ -42,10 +42,22 @@ namespace MvcHybrid
             {
                 var builder = config.Build();
                 var keyVaultEndpoint = builder["AzureKeyVaultEndpoint"];
-                var azureServiceTokenProvider = new AzureServiceTokenProvider();
-                var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback));
+                if (!string.IsNullOrEmpty(keyVaultEndpoint))
+                {
+                    var azureServiceTokenProvider = new AzureServiceTokenProvider();
+                    var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback));
 
-                config.AddAzureKeyVault(keyVaultEndpoint);
+                    config.AddAzureKeyVault(keyVaultEndpoint);
+                }
+                else
+                {
+                    IHostingEnvironment env = context.HostingEnvironment;
+
+                    config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                        .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                         .AddEnvironmentVariables()
+                         .AddUserSecrets("76d39374-e426-49ca-a223-d8e94b698012");
+                }
             })
             .UseStartup<Startup>()
             .UseKestrel(c => c.AddServerHeader = false)
