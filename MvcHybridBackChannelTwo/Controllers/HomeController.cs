@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using System.Net.Http;
-using Newtonsoft.Json.Linq;
 using IdentityModel.Client;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System.Globalization;
@@ -15,6 +14,13 @@ namespace MvcHybrid.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IHttpClientFactory _clientFactory;
+
+        public HomeController(IHttpClientFactory clientFactory)
+        {
+            _clientFactory = clientFactory;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -28,8 +34,16 @@ namespace MvcHybrid.Controllers
 
         public async Task<IActionResult> RenewTokens()
         {
-            var disco = await DiscoveryClient.GetAsync("https://localhost:44318");
-            if (disco.IsError) throw new Exception(disco.Error);
+            var tokenclient = _clientFactory.CreateClient();
+
+            var disco = await HttpClientDiscoveryExtensions.GetDiscoveryDocumentAsync(
+                tokenclient,
+                "https://localhost:44318");
+
+            if (disco.IsError)
+            {
+                throw new ApplicationException($"Status code: {disco.IsError}, Error: {disco.Error}");
+            }
 
             var tokenClient = new TokenClient(disco.TokenEndpoint, "mvc.hybrid.backchanneltwo", "secret");
             var rt = await HttpContext.GetTokenAsync("refresh_token");
