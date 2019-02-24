@@ -45,9 +45,15 @@ namespace MvcHybrid.Controllers
                 throw new ApplicationException($"Status code: {disco.IsError}, Error: {disco.Error}");
             }
 
-            var tokenClient = new TokenClient(disco.TokenEndpoint, "mvc.hybrid.backchanneltwo", "secret");
             var rt = await HttpContext.GetTokenAsync("refresh_token");
-            var tokenResult = await tokenClient.RequestRefreshTokenAsync(rt);
+
+            var tokenResult = await HttpClientTokenRequestExtensions.RequestRefreshTokenAsync(tokenclient, new RefreshTokenRequest
+            {
+                ClientSecret = "secret",
+                Address = disco.TokenEndpoint,
+                ClientId = "mvc.hybrid.backchanneltwo",
+                RefreshToken = rt
+            });
 
             if (!tokenResult.IsError)
             {
