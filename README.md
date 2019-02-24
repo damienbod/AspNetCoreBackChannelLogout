@@ -31,6 +31,8 @@ dotnet ef database update -c PersistedGrantDbContext
 
 ## History
 
+2019-02-24 Updated npm packages
+
 2019-02-07 Added Standalone application example using Azure Key Vault
 
 2018-12-26 Adding ARM template to set key vault secrets
