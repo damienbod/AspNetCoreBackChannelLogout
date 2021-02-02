@@ -9,33 +9,26 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 
 namespace MvcHybrid
 {
     public class Startup
     {
-        private readonly IHostingEnvironment _environment;
-        public IConfigurationRoot Configuration { get; }
+        public IConfiguration Configuration { get; }
 
-        public Startup(IHostingEnvironment env)
-        { 
+        private IWebHostEnvironment _environment;
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
+        {
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
-
+            Configuration = configuration;
             _environment = env;
-
-            builder.AddEnvironmentVariables();
-            Configuration = builder.Build();
         }
-
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc();
             services.AddTransient<CookieEventHandler>();
             services.AddSingleton<LogoutSessionManager>();
             services.AddHttpClient();
@@ -104,9 +97,18 @@ namespace MvcHybrid
         public void Configure(IApplicationBuilder app)
         {
             app.UseDeveloperExceptionPage();
+
             app.UseStaticFiles();
+
+            app.UseAuthorization();
             app.UseAuthentication();
-            app.UseMvcWithDefaultRoute();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }

@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore;
+﻿using System;
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
-using System;
+using Serilog.Sinks.SystemConsole.Themes;
 
 namespace MvcHybrid
 {
@@ -14,15 +16,16 @@ namespace MvcHybrid
         public static int Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
-           .MinimumLevel.Debug()
-           .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-           .Enrich.FromLogContext()
-           .CreateLogger();
+                .MinimumLevel.Debug()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .CreateLogger();
 
             try
             {
                 Log.Information("Starting web host");
-                BuildWebHost(args).Run();
+                CreateHostBuilder(args).Build().Run();
                 return 0;
             }
             catch (Exception ex)
@@ -34,47 +37,38 @@ namespace MvcHybrid
             {
                 Log.CloseAndFlush();
             }
-
         }
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-            .ConfigureAppConfiguration((context, config) =>
-            {
-                var builder = config.Build();
-                var keyVaultEndpoint = builder["AzureKeyVaultEndpoint"];
-                if (!string.IsNullOrEmpty(keyVaultEndpoint))
+
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((context, config) =>
                 {
-                    var azureServiceTokenProvider = new AzureServiceTokenProvider();
-                    var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback));
+                    var builder = config.Build();
+                    var keyVaultEndpoint = builder["AzureKeyVaultEndpoint"];
+                    if (!string.IsNullOrEmpty(keyVaultEndpoint))
+                    {
+                        var azureServiceTokenProvider = new AzureServiceTokenProvider();
+                        config.AddAzureKeyVault(new Uri(keyVaultEndpoint), new DefaultAzureCredential());
+                    }
+                    else
+                    {
+                        IHostEnvironment env = context.HostingEnvironment;
 
-                    config.AddAzureKeyVault(keyVaultEndpoint);
-                }
-                else
+                        config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                            .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                            .AddEnvironmentVariables()
+                            .AddUserSecrets("76d39374-e426-49ca-a223-d8e94b698012");
+                    }
+                })
+                .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    IHostingEnvironment env = context.HostingEnvironment;
-
-                    config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                        .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
-                         .AddEnvironmentVariables()
-                         .AddUserSecrets("76d39374-e426-49ca-a223-d8e94b698012");
-                }
-            })
-            .UseStartup<Startup>()
-            .UseKestrel(c => c.AddServerHeader = false)
-            .UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
-                .ReadFrom.Configuration(hostingContext.Configuration)
-                .Enrich.FromLogContext()
-                //.MinimumLevel.Debug()
-                .WriteTo.Console()
-                .WriteTo.File(
-                  //$@"../logscds.txt",
-                  $@"D:\home\LogFiles\Application\{Environment.UserDomainName}.txt",
-                  fileSizeLimitBytes: 1_000_000,
-                  rollOnFileSizeLimit: true,
-                  shared: true,
-                  flushToDiskInterval: TimeSpan.FromSeconds(1)))
-            .Build();
-
+                    webBuilder.UseStartup<Startup>()
+                        .UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
+                        .ReadFrom.Configuration(hostingContext.Configuration)
+                        .Enrich.FromLogContext()
+                        .WriteTo.File("../MvcHybridBackChannel.txt")
+                        .WriteTo.Console(theme: AnsiConsoleTheme.Code)
+                );
+                });
     }
 }
-

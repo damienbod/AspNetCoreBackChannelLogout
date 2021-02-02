@@ -1,24 +1,25 @@
 ﻿using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using System.IdentityModel.Tokens.Jwt;
 using IdentityModel;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 
 namespace MvcHybrid
 {
     public class Startup
     {
-        private readonly IHostingEnvironment _environment;
-        //public IConfigurationRoot Configuration { get; }
         public IConfiguration Configuration { get; }
 
-        public Startup(IConfiguration configuration, IHostingEnvironment env)
+        private IWebHostEnvironment _environment;
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             Configuration = configuration;
@@ -27,7 +28,7 @@ namespace MvcHybrid
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc();
             services.AddTransient<CookieEventHandler>();
             services.AddSingleton<LogoutSessionManager>();
             services.AddHttpClient();
@@ -94,9 +95,18 @@ namespace MvcHybrid
         public void Configure(IApplicationBuilder app)
         {
             app.UseDeveloperExceptionPage();
+
             app.UseStaticFiles();
+
+            app.UseAuthorization();
             app.UseAuthentication();
-            app.UseMvcWithDefaultRoute();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }

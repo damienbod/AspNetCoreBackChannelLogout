@@ -8,7 +8,7 @@
     <RepositoryUrl>https://github.com/damienbod/IdentityServer4AspNetCoreIdentityTemplate</RepositoryUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageTags>oidc identityserver4 identity aspnetcore</PackageTags>
-    <PackageReleaseNotes>FIDO2 Anti-forgery tokens, updated nuget packages 3.1.7, update npm packages
+    <PackageReleaseNotes>FIDO2 Anti-forgery tokens, updated nuget packages 3.1.11, update npm packages
     </PackageReleaseNotes>
     <UserSecretsId>55674afb-fac9-407f-898f-6a543e9d137a</UserSecretsId>
   </PropertyGroup>

@@ -1,8 +1,13 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.IO;
 using System.Reflection;
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Azure.Services.AppAuthentication;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace ConsoleStandaloneUsingAzureSecrets
 {
@@ -58,8 +63,9 @@ namespace ConsoleStandaloneUsingAzureSecrets
 
             if (!string.IsNullOrWhiteSpace(dnsNameKeyVault))
             {
-                configBuilder.AddAzureKeyVault($"{dnsNameKeyVault}",
-                        _config["AADAppRegistrationAppId"], _config["AADAppRegistrationAppSecret"]);
+                var azureServiceTokenProvider = new AzureServiceTokenProvider();
+                configBuilder.AddAzureKeyVault(new Uri(dnsNameKeyVault), new DefaultAzureCredential());
+
 
                 _config = configBuilder.Build();
             }
