@@ -28,6 +28,7 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authentication;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Logging;
+using IdentityServer4.Validation;
 
 namespace StsServerIdentity
 {
@@ -67,6 +68,9 @@ namespace StsServerIdentity
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
+
+            //services.AddTransient<IEndSessionRequestValidator, MyEndSessionRequestValidator>();
+
 
             services.Configure<StsConfig>(_configuration.GetSection("StsConfig"));
             services.Configure<EmailSettings>(_configuration.GetSection("EmailSettings"));
