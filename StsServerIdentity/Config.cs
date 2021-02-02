@@ -49,7 +49,7 @@ namespace StsServerIdentity
                     ClientId = "mvc.hybrid.backchannel",
                     ClientName = "MVC Hybrid (with BackChannel logout)",
                     ClientUri = "http://identityserver.io",
-
+                    RequirePkce = false,
                     ClientSecrets =
                     {
                         new Secret("secret".Sha256())
@@ -77,7 +77,7 @@ namespace StsServerIdentity
                     ClientId = "mvc.hybrid.backchanneltwo",
                     ClientName = "MVC Hybrid (with BackChannel logout two)",
                     ClientUri = "http://identityserver.io",
-
+                    RequirePkce = false,
                     ClientSecrets =
                     {
                         new Secret("secret".Sha256())
