@@ -69,8 +69,6 @@ namespace StsServerIdentity
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
 
-            //services.AddTransient<IEndSessionRequestValidator, MyEndSessionRequestValidator>();
-
 
             services.Configure<StsConfig>(_configuration.GetSection("StsConfig"));
             services.Configure<EmailSettings>(_configuration.GetSection("EmailSettings"));
