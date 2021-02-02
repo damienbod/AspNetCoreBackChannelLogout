@@ -17,7 +17,7 @@ namespace MvcHybrid.Controllers
 {
     public class LogoutController : Controller
     {
-        public LogoutSessionManager LogoutSessions { get; }
+        public LogoutSessionManager _logoutSessionsManager { get; }
         private AuthConfiguration _optionsAuthConfiguration;
         private readonly HttpClient _httpClient;
 
@@ -27,7 +27,7 @@ namespace MvcHybrid.Controllers
             IHttpClientFactory httpClientFactory)
         {
             _optionsAuthConfiguration = optionsAuthConfiguration.Value;
-            LogoutSessions = logoutSessions;
+            _logoutSessionsManager = logoutSessions;
             _httpClient = httpClientFactory.CreateClient();
         }
 
@@ -48,7 +48,7 @@ namespace MvcHybrid.Controllers
                 var sub = user.FindFirst("sub")?.Value;
                 var sid = user.FindFirst("sid")?.Value;
 
-                LogoutSessions.Add(sub, sid);
+                _logoutSessionsManager.Add(sub, sid);
 
                 return Ok();
             }
@@ -56,6 +56,7 @@ namespace MvcHybrid.Controllers
 
             return BadRequest();
         }
+
 
         private async Task<ClaimsPrincipal> ValidateLogoutToken(string logoutToken)
         {
@@ -70,10 +71,10 @@ namespace MvcHybrid.Controllers
             if (String.IsNullOrWhiteSpace(eventsJson)) throw new Exception("Invalid logout token");
 
             var events = JObject.Parse(eventsJson);
-            var logoutEvent = events.TryGetValue("http://schemas.openid.net/event/backchannel-logout");
-            if (logoutEvent == null)
+            var logoutEvent = events.TryGetValue("http://schemas.openid.net/event/backchannel-logout", out _);
+            if (logoutEvent == false)
             {
-                // 2.6 Loout Token Validation
+                // 2.6 Logout Token Validation
                 throw new Exception("Invalid logout token");
             }
             return claims;
@@ -82,19 +83,22 @@ namespace MvcHybrid.Controllers
         private async Task<ClaimsPrincipal> ValidateJwt(string jwt)
         {
             var disco = await HttpClientDiscoveryExtensions.GetDiscoveryDocumentAsync(
-                _httpClient, _optionsAuthConfiguration.StsServerIdentityUrl);
+               _httpClient, _optionsAuthConfiguration.StsServerIdentityUrl);
 
             var keys = new List<SecurityKey>();
             foreach (var webKey in disco.KeySet.Keys)
             {
-                var e = Base64Url.Decode(webKey.E);
-                var n = Base64Url.Decode(webKey.N);
-
-                var key = new RsaSecurityKey(new RSAParameters { Exponent = e, Modulus = n })
+                var key = new JsonWebKey()
                 {
-                    KeyId = webKey.Kid
+                    Kty = webKey.Kty,
+                    Alg = webKey.Alg,
+                    Kid = webKey.Kid,
+                    X = webKey.X,
+                    Y = webKey.Y,
+                    Crv = webKey.Crv,
+                    E = webKey.E,
+                    N = webKey.N,
                 };
-
                 keys.Add(key);
             }
 

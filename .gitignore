@@ -3,3 +3,5 @@
 **/obj
 /**/node_modules
 /MvcHybridBackChannel/MvcHybridBackChannel.csproj.user
+/MvcHybridBackChannel.txt
+/StsLogs.txt

@@ -10,6 +10,15 @@ namespace StsServerIdentity
 {
     public class Config
     {
+        public static IEnumerable<ApiScope> GetApiScopes()
+        {
+            return new List<ApiScope>
+            {
+                new ApiScope("scope_used_for_hybrid_flow", "Scope for the scope_used_for_hybrid_flow"),
+                new ApiScope("scope_used_for_api_in_protected_zone",  "Scope for the scope_used_for_api_in_protected_zone")
+            };
+        }
+
         public static IEnumerable<IdentityResource> GetIdentityResources()
         {
             return new List<IdentityResource>
@@ -40,7 +49,7 @@ namespace StsServerIdentity
                     ClientId = "mvc.hybrid.backchannel",
                     ClientName = "MVC Hybrid (with BackChannel logout)",
                     ClientUri = "http://identityserver.io",
-
+                    RequirePkce = false,
                     ClientSecrets =
                     {
                         new Secret("secret".Sha256())
@@ -68,7 +77,7 @@ namespace StsServerIdentity
                     ClientId = "mvc.hybrid.backchanneltwo",
                     ClientName = "MVC Hybrid (with BackChannel logout two)",
                     ClientUri = "http://identityserver.io",
-
+                    RequirePkce = false,
                     ClientSecrets =
                     {
                         new Secret("secret".Sha256())
