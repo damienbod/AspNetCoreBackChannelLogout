@@ -9,7 +9,7 @@ using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
 
-namespace MvcHybrid
+namespace MvcHybridBackChannelTwo
 {
     public class Program
     {
@@ -66,7 +66,7 @@ namespace MvcHybrid
                         .UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
                         .ReadFrom.Configuration(hostingContext.Configuration)
                         .Enrich.FromLogContext()
-                        .WriteTo.File("../_MvcHybridBackChannelTwo.txt")
+                        .WriteTo.File("../_MvcHybridBackChannelTwoBackChannelTwo.txt")
                         .WriteTo.Console(theme: AnsiConsoleTheme.Code)
                 );
                 });

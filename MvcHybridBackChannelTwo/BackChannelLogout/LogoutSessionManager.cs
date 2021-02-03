@@ -4,9 +4,9 @@ using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
 
-namespace MvcHybrid
+namespace MvcHybridBackChannelTwo.BackChannelLogout
 {
-    public class LogoutSessionManager
+    public partial class LogoutSessionManager
     {
         private static readonly Object _lock = new Object();
         private readonly ILogger<LogoutSessionManager> _logger;
@@ -31,13 +31,14 @@ namespace MvcHybrid
             {
                 var key = sub + sid;
                 var logoutSession = _cache.GetString(key);
+                _logger.LogDebug($"logoutSession: {logoutSession}");
                 if (logoutSession != null)
                 {
-                    var session = JsonConvert.DeserializeObject<Session>(logoutSession);
+                    var session = JsonConvert.DeserializeObject<BackchannelLogoutSession>(logoutSession);
                 }
                 else
                 {
-                    var newSession = new Session { Sub = sub, Sid = sid };
+                    var newSession = new BackchannelLogoutSession { Sub = sub, Sid = sid };
                     _cache.SetString(key, JsonConvert.SerializeObject(newSession), options);
                 }
             }
@@ -45,30 +46,18 @@ namespace MvcHybrid
 
         public async Task<bool> IsLoggedOutAsync(string sub, string sid)
         {
+            _logger.LogDebug($"IsLoggedOutAsync: sub: {sub}, sid: {sid}");
             var key = sub + sid;
             var matches = false;
             var logoutSession = await _cache.GetStringAsync(key);
             if (logoutSession != null)
             {
-                var session = JsonConvert.DeserializeObject<Session>(logoutSession);
+                var session = JsonConvert.DeserializeObject<BackchannelLogoutSession>(logoutSession);
                 matches = session.IsMatch(sub, sid);
                 _logger.LogInformation($"Logout session exists T/F {matches} : {sub}, sid: {sid}");
             }
 
             return matches;
-        }
-
-        private class Session
-        {
-            public string Sub { get; set; }
-            public string Sid { get; set; }
-
-            public bool IsMatch(string sub, string sid)
-            {
-                return (Sid == sid && Sub == sub) ||
-                       (Sid == sid && Sub == null) ||
-                       (Sid == null && Sub == sub);
-            }
         }
     }
 }

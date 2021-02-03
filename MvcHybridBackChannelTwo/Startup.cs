@@ -12,7 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Logging;
 
-namespace MvcHybrid
+namespace MvcHybridBackChannelTwo
 {
     public class Startup
     {
@@ -50,7 +50,7 @@ namespace MvcHybrid
                 services.AddDistributedRedisCache(options =>
                 {
                     options.Configuration = Configuration.GetConnectionString("RedisCacheConnection");
-                    options.InstanceName = "MvcHybridBackChannelTwoInstance";
+                    options.InstanceName = "MvcHybridBackChannelTwoBackChannelTwoInstance";
                 });
             }
 
@@ -62,7 +62,7 @@ namespace MvcHybrid
                 .AddCookie(options =>
                 {
                     options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-                    options.Cookie.Name = "mvchybridbc";
+                    options.Cookie.Name = "MvcHybridBackChannelTwobc";
 
                     options.EventsType = typeof(CookieEventHandler);
                 })

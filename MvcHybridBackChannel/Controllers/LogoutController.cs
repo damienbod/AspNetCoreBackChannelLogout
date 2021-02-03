@@ -1,9 +1,8 @@
 ﻿using IdentityModel;
 using IdentityModel.Client;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
@@ -12,10 +11,9 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 
-namespace MvcHybrid.Controllers
+namespace MvcHybridBackChannel.Controllers
 {
     public class LogoutController : Controller
     {
@@ -40,7 +38,9 @@ namespace MvcHybrid.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index(string logout_token)
         {
-            // MvcHybridBackChannel Backchannel Logout from the server
+            _logger.LogInformation($"Logout event from server{logout_token}");
+
+            // MvcHybridBackChannelBackChannel Backchannel Logout from the server
             Response.Headers.Add("Cache-Control", "no-cache, no-store");
             Response.Headers.Add("Pragma", "no-cache");
 
@@ -58,31 +58,44 @@ namespace MvcHybrid.Controllers
 
                 return Ok();
             }
-            catch { }
-
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"{ex.Message}");
+            }
             return BadRequest();
         }
-
 
         private async Task<ClaimsPrincipal> ValidateLogoutToken(string logoutToken)
         {
             var claims = await ValidateJwt(logoutToken);
 
-            if (claims.FindFirst("sub") == null && claims.FindFirst("sid") == null) throw new Exception("Invalid logout token");
+            if (claims.FindFirst("sub") == null && claims.FindFirst("sid") == null)
+            {
+                throw new Exception("Invalid logout token sub or sid is missing");
+            }
 
             var nonce = claims.FindFirstValue("nonce");
-            if (!String.IsNullOrWhiteSpace(nonce)) throw new Exception("Invalid logout token");
+            if (!string.IsNullOrWhiteSpace(nonce))
+            {
+                throw new Exception("Invalid logout token, no nonce");
+            }
 
             var eventsJson = claims.FindFirst("events")?.Value;
-            if (String.IsNullOrWhiteSpace(eventsJson)) throw new Exception("Invalid logout token");
+            if (string.IsNullOrWhiteSpace(eventsJson))
+            {
+                throw new Exception("Invalid logout token, missing events");
+            }
 
             var events = JObject.Parse(eventsJson);
-            var logoutEvent = events.TryGetValue("http://schemas.openid.net/event/backchannel-logout", out _);
+            JToken logoutTokenData;
+            var logoutEvent = events.TryGetValue("http://schemas.openid.net/event/backchannel-logout", out logoutTokenData);
             if (logoutEvent == false)
             {
+                _logger.LogInformation($"Invalid logout token {logoutTokenData}");
                 // 2.6 Logout Token Validation
                 throw new Exception("Invalid logout token");
             }
+
             return claims;
         }
 

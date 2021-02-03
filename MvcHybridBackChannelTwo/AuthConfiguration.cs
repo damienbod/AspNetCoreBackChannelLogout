@@ -1,4 +1,4 @@
-﻿namespace MvcHybrid
+﻿namespace MvcHybridBackChannelTwo
 {
     public class AuthConfiguration
     {

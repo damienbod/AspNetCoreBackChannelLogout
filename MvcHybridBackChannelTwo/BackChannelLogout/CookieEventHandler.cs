@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 
-namespace MvcHybrid
+namespace MvcHybridBackChannelTwo.BackChannelLogout
 {
     public class CookieEventHandler : CookieAuthenticationEvents
     {

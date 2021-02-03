@@ -12,7 +12,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
 using System.Net.Http;
 
-namespace MvcHybrid.Controllers
+namespace MvcHybridBackChannel.Controllers
 {
     public class HomeController : Controller
     {
