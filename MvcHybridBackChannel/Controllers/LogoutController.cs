@@ -39,7 +39,7 @@ namespace MvcHybridBackChannel.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index(string logout_token)
         {
-            _logger.LogInformation($"Logout event from server{logout_token}");
+            _logger.LogInformation($"BC Logout event from server: {logout_token}");
 
             // MvcHybridBackChannelBackChannel Backchannel Logout from the server
             Response.Headers.Add("Cache-Control", "no-cache, no-store");
@@ -72,19 +72,19 @@ namespace MvcHybridBackChannel.Controllers
 
             if (claims.FindFirst("sub") == null && claims.FindFirst("sid") == null)
             {
-                throw new Exception("Invalid logout token sub or sid is missing");
+                throw new Exception("BC Invalid logout token sub or sid is missing");
             }
 
             var nonce = claims.FindFirstValue("nonce");
             if (!string.IsNullOrWhiteSpace(nonce))
             {
-                throw new Exception("Invalid logout token, no nonce");
+                throw new Exception("BC Invalid logout token, no nonce");
             }
 
             var eventsJson = claims.FindFirst("events")?.Value;
             if (string.IsNullOrWhiteSpace(eventsJson))
             {
-                throw new Exception("Invalid logout token, missing events");
+                throw new Exception("BC Invalid logout token, missing events");
             }
 
             var events = JObject.Parse(eventsJson);
@@ -92,9 +92,9 @@ namespace MvcHybridBackChannel.Controllers
             var logoutEvent = events.TryGetValue("http://schemas.openid.net/event/backchannel-logout", out logoutTokenData);
             if (logoutEvent == false)
             {
-                _logger.LogInformation($"Invalid logout token {logoutTokenData}");
+                _logger.LogInformation($"BC Invalid logout token {logoutTokenData}");
                 // 2.6 Logout Token Validation
-                throw new Exception("Invalid logout token");
+                throw new Exception("BC Invalid logout token");
             }
 
             return claims;
