@@ -36,9 +36,11 @@ namespace MvcHybrid
             services.Configure<AuthConfiguration>(Configuration.GetSection("AuthConfiguration"));
 
             var authConfiguration = Configuration.GetSection("AuthConfiguration");
-            var clientId_aud = authConfiguration["Audience"]; 
+            var clientId_aud = authConfiguration["Audience"];
 
-            if (_environment.IsDevelopment())
+            var redisConnectionString = Configuration.GetConnectionString("RedisCacheConnection");
+
+            if (string.IsNullOrEmpty(redisConnectionString))
             {
                 // remove this, if your use a proper development cache hich uses the same as the production
                 services.AddDistributedMemoryCache();

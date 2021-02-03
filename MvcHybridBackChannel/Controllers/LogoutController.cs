@@ -1,5 +1,7 @@
 ﻿using IdentityModel;
 using IdentityModel.Client;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -49,6 +51,8 @@ namespace MvcHybrid.Controllers
                 var sid = user.FindFirst("sid")?.Value;
 
                 _logoutSessionsManager.Add(sub, sid);
+
+                //await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
                 return Ok();
             }
