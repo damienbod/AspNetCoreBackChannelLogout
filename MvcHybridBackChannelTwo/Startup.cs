@@ -6,13 +6,13 @@ using IdentityModel;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Logging;
+using MvcHybridBackChannelTwo.BackChannelLogout;
 
-namespace MvcHybrid
+namespace MvcHybridBackChannelTwo
 {
     public class Startup
     {
@@ -38,9 +38,11 @@ namespace MvcHybrid
             var authConfiguration = Configuration.GetSection("AuthConfiguration");
             var clientId_aud = authConfiguration["Audience"];
 
-            if(_environment.IsDevelopment())
+            var redisConnectionString = Configuration.GetConnectionString("RedisCacheConnection");
+
+            if (string.IsNullOrEmpty(redisConnectionString))
             {
-                // remove this, if your use a proper development cache hich uses the same as the production
+                // remove this, if your use a proper development cache which uses the same as the production
                 services.AddDistributedMemoryCache();
             }
             else
@@ -48,7 +50,7 @@ namespace MvcHybrid
                 services.AddDistributedRedisCache(options =>
                 {
                     options.Configuration = Configuration.GetConnectionString("RedisCacheConnection");
-                    options.InstanceName = "MvcHybridBackChannelTwoInstance";
+                    options.InstanceName = "MvcHybridBackChannelTwoBackChannelTwoInstance";
                 });
             }
 
@@ -60,7 +62,7 @@ namespace MvcHybrid
                 .AddCookie(options =>
                 {
                     options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-                    options.Cookie.Name = "mvchybridbc";
+                    options.Cookie.Name = "MvcHybridBackChannelTwobc";
 
                     options.EventsType = typeof(CookieEventHandler);
                 })

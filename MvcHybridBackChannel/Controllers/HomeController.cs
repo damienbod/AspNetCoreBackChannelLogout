@@ -12,7 +12,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
 using System.Net.Http;
 
-namespace MvcHybrid.Controllers
+namespace MvcHybridBackChannel.Controllers
 {
     public class HomeController : Controller
     {
@@ -21,7 +21,7 @@ namespace MvcHybrid.Controllers
         private IConfiguration _configuration;
 
         public HomeController(
-            IOptions<AuthConfiguration> optionsAuthConfiguration, 
+            IOptions<AuthConfiguration> optionsAuthConfiguration,
             IConfiguration configuration,
             IHttpClientFactory clientFactory)
         {
@@ -33,7 +33,7 @@ namespace MvcHybrid.Controllers
         public IActionResult Index()
         {
             var cs = _configuration["Test"];
-            return View("Index",  cs);
+            return View("Index", cs);
         }
 
         [Authorize]
@@ -47,7 +47,7 @@ namespace MvcHybrid.Controllers
             var tokenclient = _clientFactory.CreateClient();
 
             var disco = await HttpClientDiscoveryExtensions.GetDiscoveryDocumentAsync(
-                tokenclient, 
+                tokenclient,
                 _optionsAuthConfiguration.StsServerIdentityUrl);
 
             if (disco.IsError)

@@ -11,8 +11,9 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.IdentityModel.Logging;
+using MvcHybridBackChannel.BackChannelLogout;
 
-namespace MvcHybrid
+namespace MvcHybridBackChannel
 {
     public class Startup
     {
@@ -36,9 +37,11 @@ namespace MvcHybrid
             services.Configure<AuthConfiguration>(Configuration.GetSection("AuthConfiguration"));
 
             var authConfiguration = Configuration.GetSection("AuthConfiguration");
-            var clientId_aud = authConfiguration["Audience"]; 
+            var clientId_aud = authConfiguration["Audience"];
 
-            if (_environment.IsDevelopment())
+            var redisConnectionString = Configuration.GetConnectionString("RedisCacheConnection");
+
+            if (string.IsNullOrEmpty(redisConnectionString))
             {
                 // remove this, if your use a proper development cache hich uses the same as the production
                 services.AddDistributedMemoryCache();
@@ -48,7 +51,7 @@ namespace MvcHybrid
                 services.AddDistributedRedisCache(options =>
                 {
                     options.Configuration = Configuration.GetConnectionString("RedisCacheConnection");
-                    options.InstanceName = "MvcHybridBackChannelInstance";
+                    options.InstanceName = "MvcHybridBackChannelBackChannelInstance";
                 });
             }
 
@@ -60,7 +63,7 @@ namespace MvcHybrid
             .AddCookie(options =>
             {
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-                options.Cookie.Name = "mvchybridbc";
+                options.Cookie.Name = "MvcHybridBackChannelbc";
 
                 options.EventsType = typeof(CookieEventHandler);
             })
@@ -68,7 +71,7 @@ namespace MvcHybrid
             {
                 options.Authority = authConfiguration["StsServerIdentityUrl"];
                 options.RequireHttpsMetadata = false;
-                options.ClientSecret = Configuration["SecretMvcHybridBackChannel"];
+                options.ClientSecret = Configuration["SecretMvcHybridBackChannelBackChannel"];
                 options.ClientId = clientId_aud;
                 options.ResponseType = "code id_token";
                 options.UsePkce = false;

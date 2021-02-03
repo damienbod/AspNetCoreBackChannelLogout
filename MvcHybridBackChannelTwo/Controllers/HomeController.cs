@@ -10,7 +10,7 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System.Globalization;
 using Microsoft.AspNetCore.Http;
 
-namespace MvcHybrid.Controllers
+namespace MvcHybridBackChannelTwo.Controllers
 {
     public class HomeController : Controller
     {
