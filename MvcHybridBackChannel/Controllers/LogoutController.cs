@@ -22,17 +22,19 @@ namespace MvcHybrid.Controllers
         public LogoutSessionManager _logoutSessionsManager { get; }
         private AuthConfiguration _optionsAuthConfiguration;
         private readonly HttpClient _httpClient;
+        private readonly ILogger<LogoutController> _logger;
 
         public LogoutController(
             LogoutSessionManager logoutSessions,
             IOptions<AuthConfiguration> optionsAuthConfiguration,
+            ILogger<LogoutController> logger,
             IHttpClientFactory httpClientFactory)
         {
             _optionsAuthConfiguration = optionsAuthConfiguration.Value;
             _logoutSessionsManager = logoutSessions;
             _httpClient = httpClientFactory.CreateClient();
+            _logger = logger;
         }
-
 
         [HttpPost]
         [AllowAnonymous]

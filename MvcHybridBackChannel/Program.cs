@@ -66,7 +66,7 @@ namespace MvcHybrid
                         .UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
                         .ReadFrom.Configuration(hostingContext.Configuration)
                         .Enrich.FromLogContext()
-                        .WriteTo.File("../MvcHybridBackChannel.txt")
+                        .WriteTo.File("../_MvcHybridBackChannel.txt")
                         .WriteTo.Console(theme: AnsiConsoleTheme.Code)
                 );
                 });
