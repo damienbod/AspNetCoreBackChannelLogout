@@ -11,6 +11,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.IdentityModel.Logging;
+using MvcHybridBackChannel.BackChannelLogout;
 
 namespace MvcHybridBackChannel
 {

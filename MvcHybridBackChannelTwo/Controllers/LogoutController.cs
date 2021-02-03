@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using MvcHybridBackChannelTwo.BackChannelLogout;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
