@@ -6,12 +6,12 @@ namespace MvcHybrid
 {
     public class CookieEventHandler : CookieAuthenticationEvents
     {
+        private readonly LogoutSessionManager _logoutSessionManager;
+
         public CookieEventHandler(LogoutSessionManager logoutSessions)
         {
-            LogoutSessions = logoutSessions;
+            _logoutSessionManager = logoutSessions;
         }
-
-        public LogoutSessionManager LogoutSessions { get; }
 
         public override async Task ValidatePrincipal(CookieValidatePrincipalContext context)
         {
@@ -20,7 +20,7 @@ namespace MvcHybrid
                 var sub = context.Principal.FindFirst("sub")?.Value;
                 var sid = context.Principal.FindFirst("sid")?.Value;
 
-                if (await LogoutSessions.IsLoggedOutAsync(sub, sid))
+                if (await _logoutSessionManager.IsLoggedOutAsync(sub, sid))
                 {
                     context.RejectPrincipal();
                     await context.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
