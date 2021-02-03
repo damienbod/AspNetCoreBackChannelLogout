@@ -62,7 +62,7 @@ namespace MvcHybridBackChannelTwo
                 .AddCookie(options =>
                 {
                     options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-                    options.Cookie.Name = "MvcHybridBackChannelTwobc";
+                    options.Cookie.Name = "MvcHybridBackChannelTwo";
 
                     options.EventsType = typeof(CookieEventHandler);
                 })

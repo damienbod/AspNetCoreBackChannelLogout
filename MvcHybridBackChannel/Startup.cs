@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using IdentityModel;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
@@ -63,7 +62,7 @@ namespace MvcHybridBackChannel
             .AddCookie(options =>
             {
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-                options.Cookie.Name = "MvcHybridBackChannelbc";
+                options.Cookie.Name = "MvcHybridBackChannel";
 
                 options.EventsType = typeof(CookieEventHandler);
             })
