@@ -8,6 +8,14 @@
     }
   },
   "profiles": {
+    "MvcHybridBackChannel": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:44327"
+    },
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
