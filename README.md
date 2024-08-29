@@ -2,12 +2,10 @@
 
 ## Blogs
 
-<ul>
-	<li><a href="https://damienbod.com/2018/12/18/openid-connect-back-channel-logout-using-azure-redis-cache-and-identityserver4/">OpenID Connect back-channel logout using Azure Redis Cache and IdentityServer4</a></li>
-	<li><a href="https://damienbod.com/2018/12/23/using-azure-key-vault-with-asp-net-core-and-azure-app-services/">Using Azure Key Vault with ASP.NET Core and Azure App Services</a></li>
-	<li><a href="https://damienbod.com/2019/01/07/deploying-asp-net-core-app-services-using-azure-key-vault-and-azure-resource-manager-templates/">Deploying ASP.NET Core App Services using Azure Key Vault and Azure Resource Manager templates</a></li>
-    <li><a href="https://damienbod.com/2019/02/07/using-azure-key-vault-from-an-non-azure-app/">Using Azure Key Vault from a non-Azure App</a></li>
-</ul>
+[OpenID Connect back-channel logout using Azure Redis Cache and IdentityServer4](https://damienbod.com/2018/12/18/openid-connect-back-channel-logout-using-azure-redis-cache-and-identityserver4/)
+[Using Azure Key Vault with ASP.NET Core and Azure App Services](https://damienbod.com/2018/12/23/using-azure-key-vault-with-asp-net-core-and-azure-app-services/)
+[Deploying ASP.NET Core App Services using Azure Key Vault and Azure Resource Manager templates](https://damienbod.com/2019/01/07/deploying-asp-net-core-app-services-using-azure-key-vault-and-azure-resource-manager-templates/)
+[Using Azure Key Vault from a non-Azure App](https://damienbod.com/2019/02/07/using-azure-key-vault-from-an-non-azure-app/)
 
 ## Original code for Backchannel Logout
 
