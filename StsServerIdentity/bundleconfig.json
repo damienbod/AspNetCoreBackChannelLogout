@@ -29,7 +29,7 @@
       "node_modules/bootstrap/dist/css/bootstrap.min.css",
       "node_modules/sweetalert2/dist/sweetalert2.min.css"
     ],
-    "minify": { "enabled": true }
+    "minify": { "enabled": false }
   },
   // Vendor JS
   {
@@ -40,8 +40,8 @@
       "node_modules/sweetalert2/dist/sweetalert2.all.min.js"
     ],
     "minify": {
-      "enabled": true,
-      "renameLocals": true
+      "enabled": false,
+      "renameLocals": false
     },
     "sourceMap": false
   },
@@ -56,7 +56,7 @@
     ],
     "minify": {
       "enabled": true,
-      "renameLocals": true
+      "renameLocals": false
     },
     "sourceMap": false
   }
