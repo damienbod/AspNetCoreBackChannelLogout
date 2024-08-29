@@ -6,7 +6,6 @@ using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using MvcHybridBackChannelTwo.BackChannelLogout;
 using Serilog;
-using System.Configuration;
 
 namespace MvcHybridBackChannelTwo;
 
