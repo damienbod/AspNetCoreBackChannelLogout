@@ -3,6 +3,8 @@ using Fido2Identity;
 using Fido2NetLib;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.JsonWebTokens;
+using Microsoft.IdentityModel.Logging;
 using Serilog;
 using StsServerIdentity.Data;
 using StsServerIdentity.Models;
@@ -73,6 +75,9 @@ internal static class HostingExtensions
 
     public static WebApplication ConfigurePipeline(this WebApplication app)
     {
+        IdentityModelEventSource.ShowPII = true;
+        JsonWebTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
         app.UseSerilogRequestLogging();
 
         if (app.Environment.IsDevelopment())

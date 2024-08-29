@@ -37,36 +37,31 @@ public class Config
     {
         var mvcHybridBackchannelClientTwoUrl = stsConfig["MvcHybridBackchannelClientTwoUrl"];
         var mvcHybridBackchannelClientUrl = stsConfig["MvcHybridBackchannelClientUrl"];
-        // TODO use configs in app
 
-        // client credentials client
         return new List<Client>
         {
             new Client
             {
                 ClientId = "mvc.hybrid.backchannel",
                 ClientName = "MVC Hybrid (with BackChannel logout)",
-                ClientUri = "http://identityserver.io",
-                RequirePkce = false,
-                ClientSecrets =
-                {
-                    new Secret("secret".Sha256())
-                },
-
-                AllowedGrantTypes = GrantTypes.Hybrid,
-                AllowAccessTokensViaBrowser = false,
+                ClientSecrets = {new Secret("secret".Sha256()) },
+                AllowedGrantTypes = GrantTypes.Code,
+                RequirePkce = true,
+                RequireClientSecret = true,
+                AllowOfflineAccess = true,
+                AlwaysSendClientClaims = true,
+                UpdateAccessTokenClaimsOnRefresh = true,
 
                 RedirectUris = { $"{mvcHybridBackchannelClientUrl}/signin-oidc" },
                 BackChannelLogoutSessionRequired = true,
                 BackChannelLogoutUri = $"{mvcHybridBackchannelClientUrl}/logout",
                 PostLogoutRedirectUris = { $"{mvcHybridBackchannelClientUrl}/signout-callback-oidc" },
 
-                AllowOfflineAccess = true,
-
                 AllowedScopes =
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
+                    IdentityServerConstants.StandardScopes.OfflineAccess,
                     IdentityServerConstants.StandardScopes.Email
                 }
             },

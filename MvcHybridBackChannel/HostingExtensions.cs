@@ -62,8 +62,7 @@ internal static class HostingExtensions
             options.RequireHttpsMetadata = false;
             options.ClientSecret = configuration["SecretMvcHybridBackChannelBackChannel"];
             options.ClientId = clientId_aud;
-            options.ResponseType = "code id_token";
-            options.UsePkce = false;
+            options.ResponseType = "code";
 
             options.Scope.Clear();
             options.Scope.Add("openid");
