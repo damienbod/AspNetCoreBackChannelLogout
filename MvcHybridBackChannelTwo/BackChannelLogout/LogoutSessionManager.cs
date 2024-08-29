@@ -50,7 +50,11 @@ public partial class LogoutSessionManager
         if (logoutSession != null)
         {
             var session = JsonSerializer.Deserialize<BackchannelLogoutSession>(logoutSession);
-            matches = session!.IsMatch(sub, sid);
+            if (session != null)
+            {
+                matches = session.IsMatch(sub, sid);
+            }
+
             _logger.LogInformation("BC Logout session exists T/F {matches} : {sub}, sid: {sid}", matches, sub, sid);
         }
 
