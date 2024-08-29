@@ -9,6 +9,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text.Json;
 
+// See Duende IdentityServer original src:
+// https://github.com/DuendeSoftware/Samples/tree/main/IdentityServer/v7/SessionManagement/Client
 namespace MvcHybridBackChannelTwo.Controllers;
 
 public class LogoutController : Controller

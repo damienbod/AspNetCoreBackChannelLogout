@@ -11,6 +11,8 @@ using System.Security.Claims;
 
 namespace MvcHybridBackChannel.Controllers;
 
+// See Duende IdentityServer original src:
+// https://github.com/DuendeSoftware/Samples/tree/main/IdentityServer/v7/SessionManagement/Client
 public class LogoutController : Controller
 {
     private readonly AuthConfiguration _optionsAuthConfiguration;
