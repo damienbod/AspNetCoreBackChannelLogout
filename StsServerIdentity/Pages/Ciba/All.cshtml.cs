@@ -10,6 +10,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace StsServerIdentity.Pages.Ciba;
 
+[SecurityHeaders]
 [Authorize]
 public class AllModel : PageModel
 {

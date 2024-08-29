@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace StsServerIdentity.Pages.Logout;
 
+[SecurityHeaders]
 [AllowAnonymous]
 public class LoggedOut : PageModel
 {

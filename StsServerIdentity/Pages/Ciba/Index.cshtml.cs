@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace StsServerIdentity.Pages.Ciba;
 
 [AllowAnonymous]
+[SecurityHeaders]
 public class IndexModel : PageModel
 {
     public BackchannelUserLoginRequest LoginRequest { get; set; }

@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace StsServerIdentity.Pages.Grants;
 
+[SecurityHeaders]
 [Authorize]
 public class Index : PageModel
 {

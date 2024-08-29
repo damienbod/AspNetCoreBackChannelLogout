@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace StsServerIdentity.Pages.Consent;
 
 [Authorize]
+[SecurityHeadersAttribute]
 public class Index : PageModel
 {
     private readonly IIdentityServerInteractionService _interaction;

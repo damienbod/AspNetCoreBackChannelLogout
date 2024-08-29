@@ -11,6 +11,7 @@ using StsServerIdentity.Models;
 
 namespace StsServerIdentity.Pages.Logout;
 
+[SecurityHeaders]
 [AllowAnonymous]
 public class Index : PageModel
 {

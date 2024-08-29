@@ -12,6 +12,7 @@ using StsServerIdentity.Models;
 
 namespace StsServerIdentity.Pages.Login;
 
+[SecurityHeaders]
 [AllowAnonymous]
 public class Index : PageModel
 {

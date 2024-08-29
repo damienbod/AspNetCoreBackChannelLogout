@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace StsServerIdentity.Pages.Error;
 
 [AllowAnonymous]
+[SecurityHeaders]
 public class Index : PageModel
 {
     private readonly IIdentityServerInteractionService _interaction;

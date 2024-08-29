@@ -12,6 +12,7 @@ using StsServerIdentity.Pages.Consent;
 
 namespace StsServerIdentity.Pages.Device;
 
+[SecurityHeaders]
 [Authorize]
 public class Index : PageModel
 {
