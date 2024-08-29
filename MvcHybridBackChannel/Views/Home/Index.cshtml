@@ -7,7 +7,7 @@
 
 <br />
 
-@if (User.Identity.IsAuthenticated)
+@if (User.Identity!.IsAuthenticated)
 {
     <h1>Logged in as: @User.Identity.Name</h1>
 }

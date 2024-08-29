@@ -7,7 +7,7 @@ public partial class LogoutSessionManager
         public string? Sub { get; set; }
         public string? Sid { get; set; }
 
-        public bool IsMatch(string sub, string sid)
+        public bool IsMatch(string? sub, string? sid)
         {
             return (Sid == sid && Sub == sub) ||
                    (Sid == sid && Sub == null) ||

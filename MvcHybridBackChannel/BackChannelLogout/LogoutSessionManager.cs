@@ -41,7 +41,7 @@ public partial class LogoutSessionManager
         }
     }
 
-    public async Task<bool> IsLoggedOutAsync(string sub, string sid)
+    public async Task<bool> IsLoggedOutAsync(string? sub, string? sid)
     {
         _logger.LogInformation("BC IsLoggedOutAsync: sub: {sub}, sid: {sid}", sub, sid);
         var key = sub + sid;
