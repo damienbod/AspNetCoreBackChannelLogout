@@ -76,8 +76,8 @@ public class HomeController : Controller
             tokens.Add(new AuthenticationToken { Name = "expires_at", Value = expiresAt.ToString("o", CultureInfo.InvariantCulture) });
 
             var info = await HttpContext.AuthenticateAsync("Cookies");
-            info.Properties.StoreTokens(tokens);
-            await HttpContext.SignInAsync("Cookies", info.Principal, info.Properties);
+            info.Properties!.StoreTokens(tokens);
+            await HttpContext.SignInAsync("Cookies", info.Principal!, info.Properties);
 
             return Redirect("~/Home/Secure");
         }

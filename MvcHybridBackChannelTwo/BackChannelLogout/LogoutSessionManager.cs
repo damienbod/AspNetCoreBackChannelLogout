@@ -41,7 +41,7 @@ public partial class LogoutSessionManager
         }
     }
 
-    public async Task<bool> IsLoggedOutAsync(string sub, string sid)
+    public async Task<bool> IsLoggedOutAsync(string? sub, string? sid)
     {
         _logger.LogInformation("BC IsLoggedOutAsync: sub: {sub}, sid: {sid}", sub, sid);
         var key = sub + sid;
@@ -50,7 +50,7 @@ public partial class LogoutSessionManager
         if (logoutSession != null)
         {
             var session = JsonConvert.DeserializeObject<BackchannelLogoutSession>(logoutSession);
-            matches = session.IsMatch(sub, sid);
+            matches = session!.IsMatch(sub, sid);
             _logger.LogInformation("BC Logout session exists T/F {matches} : {sub}, sid: {sid}", matches, sub, sid);
         }
 

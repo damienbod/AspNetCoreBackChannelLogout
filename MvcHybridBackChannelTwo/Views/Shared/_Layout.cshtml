@@ -17,7 +17,7 @@
         </button>
         <div class="collapse navbar-collapse" id="topNavbarCollapse">
             <ul class="mr-auto navbar-nav">
-                @if (User.Identity.IsAuthenticated)
+                @if (User.Identity!.IsAuthenticated)
                 {
                     <li class="nav-item">
                         <a asp-controller="Home" asp-action="Logout" class="nav-link">Logout</a>
