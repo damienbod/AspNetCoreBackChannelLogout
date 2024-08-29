@@ -1,5 +1,7 @@
 # ASP.NET Core OpenID Connect Back-Channel Logout for Hybrid Clients
 
+[![.NET](https://github.com/damienbod/AspNetCoreBackChannelLogout/actions/workflows/dotnet.yml/badge.svg)](https://github.com/damienbod/AspNetCoreBackChannelLogout/actions/workflows/dotnet.yml)
+
 ## Blogs
 
 - [OpenID Connect back-channel logout using Azure Redis Cache and IdentityServer4](https://damienbod.com/2018/12/18/openid-connect-back-channel-logout-using-azure-redis-cache-and-identityserver4/)
