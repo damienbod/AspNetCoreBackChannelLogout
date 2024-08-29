@@ -4,8 +4,8 @@ public partial class LogoutSessionManager
 {
     private class BackchannelLogoutSession
     {
-        public string Sub { get; set; }
-        public string Sid { get; set; }
+        public string? Sub { get; set; }
+        public string? Sid { get; set; }
 
         public bool IsMatch(string sub, string sid)
         {
