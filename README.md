@@ -2,22 +2,20 @@
 
 ## Blogs
 
-<ul>
-	<li><a href="https://damienbod.com/2018/12/18/openid-connect-back-channel-logout-using-azure-redis-cache-and-identityserver4/">OpenID Connect back-channel logout using Azure Redis Cache and IdentityServer4</a></li>
-	<li><a href="https://damienbod.com/2018/12/23/using-azure-key-vault-with-asp-net-core-and-azure-app-services/">Using Azure Key Vault with ASP.NET Core and Azure App Services</a></li>
-	<li><a href="https://damienbod.com/2019/01/07/deploying-asp-net-core-app-services-using-azure-key-vault-and-azure-resource-manager-templates/">Deploying ASP.NET Core App Services using Azure Key Vault and Azure Resource Manager templates</a></li>
-    <li><a href="https://damienbod.com/2019/02/07/using-azure-key-vault-from-an-non-azure-app/">Using Azure Key Vault from a non-Azure App</a></li>
-</ul>
+- [OpenID Connect back-channel logout using Azure Redis Cache and IdentityServer4](https://damienbod.com/2018/12/18/openid-connect-back-channel-logout-using-azure-redis-cache-and-identityserver4/)
+- [Using Azure Key Vault with ASP.NET Core and Azure App Services](https://damienbod.com/2018/12/23/using-azure-key-vault-with-asp-net-core-and-azure-app-services/)
+- [Deploying ASP.NET Core App Services using Azure Key Vault and Azure Resource Manager templates](https://damienbod.com/2019/01/07/deploying-asp-net-core-app-services-using-azure-key-vault-and-azure-resource-manager-templates/)
+- [Using Azure Key Vault from a non-Azure App](https://damienbod.com/2019/02/07/using-azure-key-vault-from-an-non-azure-app/)
 
 ## Original code for Backchannel Logout
 
-The IdentityServer4 samples was used to build this example. The code was updated, but not changed. See this following link for the original:
+The IdentityServer samples was used to build this example. The code was updated, but not changed. See this following link for the original:
 
 https://github.com/IdentityServer/IdentityServer4.Samples/tree/release/Clients/src/MvcHybridBackChannel
 
 ## Database Setup
 
-The Secure Token Service is setup using IdentityServer4 with Identity and Microsoft SQL Server. Change the connection string and initialize the database using EF Core migrations. 
+The Secure Token Service is setup using Duende IdentityServer with Identity and Microsoft SQL Server. Change the connection string and initialize the database using EF Core migrations. 
 
 ```
 dotnet ef migrations add initSts -c ApplicationDbContext
@@ -31,19 +29,14 @@ dotnet ef database update -c PersistedGrantDbContext
 
 ## History
 
-2021-02-02 Updated .NET 5, IdentityServer4
-
-2019-02-24 Updated npm packages, removing obsolete APIs
-
-2019-02-07 Added Standalone application example using Azure Key Vault
-
-2018-12-26 Adding ARM template to set key vault secrets
-
-2018-12-23 Adding Key Vault to the MvcHybridBackChannel project
-
-2018-12-18 Added Azure Redis Cache, support for multi instance OIDC backchannel logout
-
-2018-11-22 Updated, Nuget packages, npm packages, Logout controller
+- 2024-08-29 Updated .NET 8, Duende IDP
+- 2021-02-02 Updated .NET 5, IdentityServer4
+- 2019-02-24 Updated npm packages, removing obsolete APIs
+- 2019-02-07 Added Standalone application example using Azure Key Vault
+- 2018-12-26 Adding ARM template to set key vault secrets
+- 2018-12-23 Adding Key Vault to the MvcHybridBackChannel project
+- 2018-12-18 Added Azure Redis Cache, support for multi instance OIDC backchannel logout
+- 2018-11-22 Updated, Nuget packages, npm packages, Logout controller
 
 ## Links
 

@@ -1,34 +1,31 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
-namespace MvcHybridBackChannel.BackChannelLogout
+namespace MvcHybridBackChannel.BackChannelLogout;
+
+public class CookieEventHandler : CookieAuthenticationEvents
 {
-    public class CookieEventHandler : CookieAuthenticationEvents
+    private readonly LogoutSessionManager _logoutSessionManager;
+    private readonly ILogger<CookieEventHandler> _logger;
+
+    public CookieEventHandler(LogoutSessionManager logoutSessions, ILoggerFactory loggerFactory)
     {
-        private readonly LogoutSessionManager _logoutSessionManager;
-        private readonly ILogger<CookieEventHandler> _logger;
+        _logoutSessionManager = logoutSessions;
+        _logger = loggerFactory.CreateLogger<CookieEventHandler>();
+    }
 
-        public CookieEventHandler(LogoutSessionManager logoutSessions, ILoggerFactory loggerFactory)
+    public override async Task ValidatePrincipal(CookieValidatePrincipalContext context)
+    {
+        if (context.Principal!.Identity!.IsAuthenticated)
         {
-            _logoutSessionManager = logoutSessions;
-            _logger = loggerFactory.CreateLogger<CookieEventHandler>();
-        }
+            _logger.LogInformation($"BC ValidatePrincipal: {context.Principal.Identity.IsAuthenticated}");
+            var sub = context.Principal.FindFirst("sub")?.Value;
+            var sid = context.Principal.FindFirst("sid")?.Value;
 
-        public override async Task ValidatePrincipal(CookieValidatePrincipalContext context)
-        {
-            if (context.Principal.Identity.IsAuthenticated)
+            if (await _logoutSessionManager.IsLoggedOutAsync(sub, sid))
             {
-                _logger.LogInformation($"BC ValidatePrincipal: {context.Principal.Identity.IsAuthenticated}");
-                var sub = context.Principal.FindFirst("sub")?.Value;
-                var sid = context.Principal.FindFirst("sid")?.Value;
-
-                if (await _logoutSessionManager.IsLoggedOutAsync(sub, sid))
-                {
-                    context.RejectPrincipal();
-                    await context.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-                }
+                context.RejectPrincipal();
+                await context.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             }
         }
     }
