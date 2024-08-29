@@ -1,93 +1,98 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using System.Net.Http;
-using IdentityModel.Client;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System.Globalization;
-using Microsoft.AspNetCore.Http;
 
-namespace MvcHybridBackChannelTwo.Controllers
+namespace MvcHybridBackChannelTwo.Controllers;
+
+public class HomeController : Controller
 {
-    public class HomeController : Controller
+    private readonly AuthConfiguration _optionsAuthConfiguration;
+    private readonly IHttpClientFactory _clientFactory;
+    private readonly IConfiguration _configuration;
+
+    public HomeController(
+        IOptions<AuthConfiguration> optionsAuthConfiguration,
+        IConfiguration configuration,
+        IHttpClientFactory clientFactory)
     {
-        private readonly IHttpClientFactory _clientFactory;
+        _configuration = configuration;
+        _optionsAuthConfiguration = optionsAuthConfiguration.Value;
+        _clientFactory = clientFactory;
+    }
 
-        public HomeController(IHttpClientFactory clientFactory)
+    public IActionResult Index()
+    {
+        var cs = _configuration["Test"];
+        return View("Index", cs);
+    }
+
+    [Authorize]
+    public IActionResult Secure()
+    {
+        return View();
+    }
+
+    public async Task<IActionResult> RenewTokens()
+    {
+        var tokenclient = _clientFactory.CreateClient();
+
+        var disco = await HttpClientDiscoveryExtensions.GetDiscoveryDocumentAsync(
+            tokenclient,
+            _optionsAuthConfiguration.StsServerIdentityUrl);
+
+        if (disco.IsError)
         {
-            _clientFactory = clientFactory;
+            throw new ApplicationException($"Status code: {disco.IsError}, Error: {disco.Error}");
         }
 
-        public IActionResult Index()
+        var rt = await HttpContext.GetTokenAsync("refresh_token");
+
+        var tokenResult = await HttpClientTokenRequestExtensions.RequestRefreshTokenAsync(tokenclient, new RefreshTokenRequest
         {
-            return View();
-        }
+            ClientSecret = "secret",
+            Address = disco.TokenEndpoint,
+            ClientId = "mvc.hybrid.backchannel",
+            RefreshToken = rt
+        });
 
-        [Authorize]
-        public IActionResult Secure()
+        if (!tokenResult.IsError)
         {
-            return View();
-        }
+            var old_id_token = await HttpContext.GetTokenAsync("id_token");
+            var new_access_token = tokenResult.AccessToken;
+            var new_refresh_token = tokenResult.RefreshToken;
 
-        public async Task<IActionResult> RenewTokens()
-        {
-            var tokenclient = _clientFactory.CreateClient();
-
-            var disco = await HttpClientDiscoveryExtensions.GetDiscoveryDocumentAsync(
-                tokenclient,
-                "https://localhost:44318");
-
-            if (disco.IsError)
+            var tokens = new List<AuthenticationToken>
             {
-                throw new ApplicationException($"Status code: {disco.IsError}, Error: {disco.Error}");
-            }
+                new AuthenticationToken { Name = OpenIdConnectParameterNames.IdToken, Value = old_id_token },
+                new AuthenticationToken { Name = OpenIdConnectParameterNames.AccessToken, Value = new_access_token },
+                new AuthenticationToken { Name = OpenIdConnectParameterNames.RefreshToken, Value = new_refresh_token }
+            };
 
-            var rt = await HttpContext.GetTokenAsync("refresh_token");
+            var expiresAt = DateTime.UtcNow + TimeSpan.FromSeconds(tokenResult.ExpiresIn);
+            tokens.Add(new AuthenticationToken { Name = "expires_at", Value = expiresAt.ToString("o", CultureInfo.InvariantCulture) });
 
-            var tokenResult = await HttpClientTokenRequestExtensions.RequestRefreshTokenAsync(tokenclient, new RefreshTokenRequest
-            {
-                ClientSecret = "secret",
-                Address = disco.TokenEndpoint,
-                ClientId = "mvc.hybrid.backchanneltwo",
-                RefreshToken = rt
-            });
+            var info = await HttpContext.AuthenticateAsync("Cookies");
+            info.Properties.StoreTokens(tokens);
+            await HttpContext.SignInAsync("Cookies", info.Principal, info.Properties);
 
-            if (!tokenResult.IsError)
-            {
-                var old_id_token = await HttpContext.GetTokenAsync("id_token");
-                var new_access_token = tokenResult.AccessToken;
-                var new_refresh_token = tokenResult.RefreshToken;
-
-                var tokens = new List<AuthenticationToken>();
-                tokens.Add(new AuthenticationToken { Name = OpenIdConnectParameterNames.IdToken, Value = old_id_token });
-                tokens.Add(new AuthenticationToken { Name = OpenIdConnectParameterNames.AccessToken, Value = new_access_token });
-                tokens.Add(new AuthenticationToken { Name = OpenIdConnectParameterNames.RefreshToken, Value = new_refresh_token });
-
-                var expiresAt = DateTime.UtcNow + TimeSpan.FromSeconds(tokenResult.ExpiresIn);
-                tokens.Add(new AuthenticationToken { Name = "expires_at", Value = expiresAt.ToString("o", CultureInfo.InvariantCulture) });
-
-                var info = await HttpContext.AuthenticateAsync("Cookies");
-                info.Properties.StoreTokens(tokens);
-                await HttpContext.SignInAsync("Cookies", info.Principal, info.Properties);
-
-                return Redirect("~/Home/Secure");
-            }
-
-            ViewData["Error"] = tokenResult.Error;
-            return View("Error");
+            return Redirect("~/Home/Secure");
         }
 
-        public IActionResult Logout()
-        {
-            return new SignOutResult(new[] { "Cookies", "oidc" });
-        }
+        ViewData["Error"] = tokenResult.Error;
+        return View("Error");
+    }
 
-        public IActionResult Error()
-        {
-            return View();
-        }
+    public IActionResult Logout()
+    {
+        return new SignOutResult(["Cookies", "oidc"]);
+    }
+
+    public IActionResult Error()
+    {
+        return View();
     }
 }
