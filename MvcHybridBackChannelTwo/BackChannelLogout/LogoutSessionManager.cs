@@ -19,7 +19,7 @@ public partial class LogoutSessionManager
         _logger = loggerFactory.CreateLogger<LogoutSessionManager>();
     }
 
-    public void Add(string sub, string sid)
+    public void Add(string? sub, string? sid)
     {
         _logger.LogWarning("BC Add a logout to the session: sub: {sub}, sid: {sid}", sub, sid);
         var options = new DistributedCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromDays(cacheExpirationInDays));

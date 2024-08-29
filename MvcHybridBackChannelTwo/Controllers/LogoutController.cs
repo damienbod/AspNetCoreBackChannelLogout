@@ -35,11 +35,11 @@ public class LogoutController : Controller
     [AllowAnonymous]
     public async Task<IActionResult> Index(string logout_token)
     {
-        _logger.LogInformation($"BC Logout event from server: {logout_token}");
+        _logger.LogInformation("BC Logout event from server: {logout_token}", logout_token);
 
         // MvcHybridBackChannelBackChannel Backchannel Logout from the server
-        Response.Headers.Add("Cache-Control", "no-cache, no-store");
-        Response.Headers.Add("Pragma", "no-cache");
+        Response.Headers.Append("Cache-Control", "no-cache, no-store");
+        Response.Headers.Append("Pragma", "no-cache");
 
         try
         {
@@ -88,7 +88,7 @@ public class LogoutController : Controller
         var logoutEvent = events.TryGetValue("http://schemas.openid.net/event/backchannel-logout", out logoutTokenData);
         if (logoutEvent == false)
         {
-            _logger.LogInformation($"BC Invalid logout token {logoutTokenData}");
+            _logger.LogInformation("BC Invalid logout token {logoutTokenData}", logoutTokenData);
             // 2.6 Logout Token Validation
             throw new Exception("BC Invalid logout token");
         }
@@ -102,7 +102,7 @@ public class LogoutController : Controller
            _httpClient, _optionsAuthConfiguration.StsServerIdentityUrl);
 
         var keys = new List<SecurityKey>();
-        foreach (var webKey in disco.KeySet.Keys)
+        foreach (var webKey in disco.KeySet!.Keys)
         {
             var key = new JsonWebKey()
             {
