@@ -15,6 +15,11 @@ internal static class HostingExtensions
 {
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
+        var stsConfig = builder.Configuration.GetSection("StsConfig");
+        builder.Services.Configure<StsConfig>(builder.Configuration.GetSection("StsConfig"));
+
+     
+
         builder.Services.AddRazorPages();
 
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -28,8 +33,6 @@ internal static class HostingExtensions
 
         builder.Services.Configure<Fido2Configuration>(builder.Configuration.GetSection("fido2"));
         builder.Services.AddScoped<Fido2Store>();
-
-        var authConfigurations = builder.Configuration.GetSection("AuthConfigurations");
 
         builder.Services
             .AddIdentityServer(options =>
@@ -45,7 +48,7 @@ internal static class HostingExtensions
             .AddInMemoryIdentityResources(Config.GetIdentityResources())
             .AddInMemoryApiResources(Config.GetApiResources())
             .AddInMemoryApiScopes(Config.GetApiScopes())
-            .AddInMemoryClients(Config.GetClients(authConfigurations))
+            .AddInMemoryClients(Config.GetClients(stsConfig))
             .AddAspNetIdentity<ApplicationUser>()
             .AddProfileService<IdentityWithAdditionalClaimsProfileService>();
 

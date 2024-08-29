@@ -33,7 +33,7 @@ public class Config
     }
 
     // clients want to access resources (aka scopes)
-    public static IEnumerable<Client> GetClients(IConfigurationSection stsConfig)
+    public static IEnumerable<Client> GetClients(IConfiguration stsConfig)
     {
         var mvcHybridBackchannelClientTwoUrl = stsConfig["MvcHybridBackchannelClientTwoUrl"];
         var mvcHybridBackchannelClientUrl = stsConfig["MvcHybridBackchannelClientUrl"];
