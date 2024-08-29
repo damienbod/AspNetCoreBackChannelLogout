@@ -31,19 +31,14 @@ dotnet ef database update -c PersistedGrantDbContext
 
 ## History
 
-2021-02-02 Updated .NET 5, IdentityServer4
-
-2019-02-24 Updated npm packages, removing obsolete APIs
-
-2019-02-07 Added Standalone application example using Azure Key Vault
-
-2018-12-26 Adding ARM template to set key vault secrets
-
-2018-12-23 Adding Key Vault to the MvcHybridBackChannel project
-
-2018-12-18 Added Azure Redis Cache, support for multi instance OIDC backchannel logout
-
-2018-11-22 Updated, Nuget packages, npm packages, Logout controller
+- 2024-08-29 Updated .NET 8, Duende IDP
+- 2021-02-02 Updated .NET 5, IdentityServer4
+- 2019-02-24 Updated npm packages, removing obsolete APIs
+- 2019-02-07 Added Standalone application example using Azure Key Vault
+- 2018-12-26 Adding ARM template to set key vault secrets
+- 2018-12-23 Adding Key Vault to the MvcHybridBackChannel project
+- 2018-12-18 Added Azure Redis Cache, support for multi instance OIDC backchannel logout
+- 2018-11-22 Updated, Nuget packages, npm packages, Logout controller
 
 ## Links
 
