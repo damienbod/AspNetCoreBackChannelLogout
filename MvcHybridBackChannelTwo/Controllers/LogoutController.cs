@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using MvcHybridBackChannelTwo.BackChannelLogout;
-using Newtonsoft.Json.Linq;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text.Json;
 
 namespace MvcHybridBackChannelTwo.Controllers;
 
@@ -83,9 +83,9 @@ public class LogoutController : Controller
             throw new Exception("BC Invalid logout token, missing events");
         }
 
-        var events = JObject.Parse(eventsJson);
-        JToken logoutTokenData;
-        var logoutEvent = events.TryGetValue("http://schemas.openid.net/event/backchannel-logout", out logoutTokenData);
+        var events = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(eventsJson);
+        var logoutEvent = events!.TryGetValue("http://schemas.openid.net/event/backchannel-logout", out var logoutTokenData);
+
         if (logoutEvent == false)
         {
             _logger.LogInformation("BC Invalid logout token {logoutTokenData}", logoutTokenData);
