@@ -63,7 +63,6 @@ class Program
             var azureServiceTokenProvider = new AzureServiceTokenProvider();
             configBuilder.AddAzureKeyVault(new Uri(dnsNameKeyVault), new DefaultAzureCredential());
 
-
             _config = configBuilder.Build();
         }
     }
