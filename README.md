@@ -38,6 +38,10 @@ dotnet ef database update -c PersistedGrantDbContext
 
 https://openid.net/specs/openid-connect-backchannel-1_0.html
 
+https://github.com/DuendeSoftware/Samples/tree/main/IdentityServer/v7/SessionManagement
+
+https://github.com/DuendeSoftware/Samples/tree/main/IdentityServer/v6/SessionManagement
+
 https://github.com/DuendeSoftware/Samples/tree/main/IdentityServer/v5/Basics/MvcBackChannelLogout
 
 http://docs.identityserver.io/en/release/topics/signout.html
