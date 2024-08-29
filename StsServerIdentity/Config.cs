@@ -69,27 +69,24 @@ public class Config
             {
                 ClientId = "mvc.hybrid.backchanneltwo",
                 ClientName = "MVC Hybrid (with BackChannel logout two)",
-                ClientUri = "http://identityserver.io",
-                RequirePkce = false,
-                ClientSecrets =
-                {
-                    new Secret("secret".Sha256())
-                },
-
-                AllowedGrantTypes = GrantTypes.Hybrid,
-                AllowAccessTokensViaBrowser = false,
+                ClientSecrets = {new Secret("secret".Sha256()) },
+                AllowedGrantTypes = GrantTypes.Code,
+                RequirePkce = true,
+                RequireClientSecret = true,
+                AllowOfflineAccess = true,
+                AlwaysSendClientClaims = true,
+                UpdateAccessTokenClaimsOnRefresh = true,
 
                 RedirectUris = { $"{mvcHybridBackchannelClientTwoUrl}/signin-oidc" },
                 BackChannelLogoutUri = $"{mvcHybridBackchannelClientTwoUrl}/logout",
                 BackChannelLogoutSessionRequired = true,
                 PostLogoutRedirectUris = { $"{mvcHybridBackchannelClientTwoUrl}/signout-callback-oidc" },
 
-                AllowOfflineAccess = true,
-
                 AllowedScopes =
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
+                    IdentityServerConstants.StandardScopes.OfflineAccess,
                     IdentityServerConstants.StandardScopes.Email
                 }
             }
