@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace MvcHybridBackChannelTwo.BackChannelLogout;
 
@@ -31,12 +31,12 @@ public partial class LogoutSessionManager
             _logger.LogInformation("BC logoutSession: {logoutSession}", logoutSession);
             if (logoutSession != null)
             {
-                var session = JsonConvert.DeserializeObject<BackchannelLogoutSession>(logoutSession);
+                var session = JsonSerializer.Deserialize<BackchannelLogoutSession>(logoutSession);
             }
             else
             {
                 var newSession = new BackchannelLogoutSession { Sub = sub, Sid = sid };
-                _cache.SetString(key, JsonConvert.SerializeObject(newSession), options);
+                _cache.SetString(key, JsonSerializer.Serialize(newSession), options);
             }
         }
     }
@@ -49,7 +49,7 @@ public partial class LogoutSessionManager
         var logoutSession = await _cache.GetStringAsync(key);
         if (logoutSession != null)
         {
-            var session = JsonConvert.DeserializeObject<BackchannelLogoutSession>(logoutSession);
+            var session = JsonSerializer.Deserialize<BackchannelLogoutSession>(logoutSession);
             matches = session!.IsMatch(sub, sid);
             _logger.LogInformation("BC Logout session exists T/F {matches} : {sub}, sid: {sid}", matches, sub, sid);
         }
