@@ -18,7 +18,7 @@ internal static class HostingExtensions
         var stsConfig = builder.Configuration.GetSection("StsConfig");
         builder.Services.Configure<StsConfig>(builder.Configuration.GetSection("StsConfig"));
 
-     
+
 
         builder.Services.AddRazorPages();
 
