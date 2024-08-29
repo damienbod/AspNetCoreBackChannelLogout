@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2046
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35201.131
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StsServerIdentity", "StsServerIdentity\StsServerIdentity.csproj", "{62786040-0228-438F-B186-6EE2B02903E6}"
 EndProject
@@ -11,12 +11,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MvcHybridBackChannelTwo", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0A1448BA-7BE0-44EE-B184-EF8EDA688610}"
 	ProjectSection(SolutionItems) = preProject
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
 		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "AzureResourceGroupMvcHybridBackChannel", "AzureResourceGroupMvcHybridBackChannel\AzureResourceGroupMvcHybridBackChannel.deployproj", "{DED60CCB-4C2B-4B8B-96ED-CF722E029E3B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleStandaloneUsingAzureSecrets", "ConsoleStandaloneUsingAzureSecrets\ConsoleStandaloneUsingAzureSecrets.csproj", "{3142A077-E12B-4A6B-A98E-09F99ACFC788}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleStandaloneUsingAzureSecrets", "ConsoleStandaloneUsingAzureSecrets\ConsoleStandaloneUsingAzureSecrets.csproj", "{3142A077-E12B-4A6B-A98E-09F99ACFC788}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
