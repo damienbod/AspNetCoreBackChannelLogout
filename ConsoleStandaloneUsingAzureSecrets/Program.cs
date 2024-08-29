@@ -1,5 +1,4 @@
 ﻿using Azure.Identity;
-using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -60,9 +59,7 @@ class Program
 
         if (!string.IsNullOrWhiteSpace(dnsNameKeyVault))
         {
-            var azureServiceTokenProvider = new AzureServiceTokenProvider();
             configBuilder.AddAzureKeyVault(new Uri(dnsNameKeyVault), new DefaultAzureCredential());
-
             _config = configBuilder.Build();
         }
     }
