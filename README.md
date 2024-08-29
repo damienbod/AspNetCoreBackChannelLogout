@@ -7,12 +7,6 @@
 - [Deploying ASP.NET Core App Services using Azure Key Vault and Azure Resource Manager templates](https://damienbod.com/2019/01/07/deploying-asp-net-core-app-services-using-azure-key-vault-and-azure-resource-manager-templates/)
 - [Using Azure Key Vault from a non-Azure App](https://damienbod.com/2019/02/07/using-azure-key-vault-from-an-non-azure-app/)
 
-## Original code for Backchannel Logout
-
-The IdentityServer samples was used to build this example. The code was updated, but not changed. See this following link for the original:
-
-https://github.com/IdentityServer/IdentityServer4.Samples/tree/release/Clients/src/MvcHybridBackChannel
-
 ## Database Setup
 
 The Secure Token Service is setup using Duende IdentityServer with Identity and Microsoft SQL Server. Change the connection string and initialize the database using EF Core migrations. 
@@ -41,6 +35,8 @@ dotnet ef database update -c PersistedGrantDbContext
 ## Links
 
 https://openid.net/specs/openid-connect-backchannel-1_0.html
+
+https://github.com/DuendeSoftware/Samples/tree/main/IdentityServer/v5/Basics/MvcBackChannelLogout
 
 http://docs.identityserver.io/en/release/topics/signout.html
 
