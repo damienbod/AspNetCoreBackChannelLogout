@@ -1,9 +1,7 @@
-﻿namespace MvcHybridBackChannel
-{
-    public class AuthConfiguration
-    {
-        public string StsServerIdentityUrl { get; set; }
+﻿namespace MvcHybridBackChannel;
 
-        public string Audience { get; set; }
-    }
+public class AuthConfiguration
+{
+    public string StsServerIdentityUrl { get; set; } = string.Empty;
+    public string Audience { get; set; } = string.Empty;
 }

@@ -2,17 +2,12 @@
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using MvcHybridBackChannel.BackChannelLogout;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Net.Http;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace MvcHybridBackChannel.Controllers
 {

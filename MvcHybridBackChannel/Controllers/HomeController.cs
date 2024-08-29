@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using IdentityModel.Client;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System.Globalization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Configuration;
-using System.Net.Http;
 
 namespace MvcHybridBackChannel.Controllers
 {
