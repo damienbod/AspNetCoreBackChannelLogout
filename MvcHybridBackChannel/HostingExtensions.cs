@@ -37,7 +37,7 @@ internal static class HostingExtensions
         }
         else
         {
-            services.AddDistributedRedisCache(options =>
+            services.AddStackExchangeRedisCache(options =>
             {
                 options.Configuration = configuration.GetConnectionString("RedisCacheConnection");
                 options.InstanceName = "MvcHybridBackChannelBackChannelInstance";
