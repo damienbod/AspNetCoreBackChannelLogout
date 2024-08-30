@@ -55,7 +55,7 @@ public class HomeController : Controller
         {
             ClientSecret = "secret",
             Address = disco.TokenEndpoint,
-            ClientId = "mvc.hybrid.backchannel",
+            ClientId = "mvc.hybrid.backchanneltwo",
             RefreshToken = rt
         });
 
