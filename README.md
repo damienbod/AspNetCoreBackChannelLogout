@@ -25,6 +25,7 @@ dotnet ef database update -c PersistedGrantDbContext
 
 ## History
 
+- 2024-11-03 Updated packages
 - 2024-08-29 Updated .NET 8, Duende IDP
 - 2021-02-02 Updated .NET 5, IdentityServer4
 - 2019-02-24 Updated npm packages, removing obsolete APIs
