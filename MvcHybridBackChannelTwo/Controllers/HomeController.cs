@@ -56,7 +56,7 @@ public class HomeController : Controller
             ClientSecret = "secret",
             Address = disco.TokenEndpoint,
             ClientId = "mvc.hybrid.backchanneltwo",
-            RefreshToken = rt
+            RefreshToken = rt ?? throw new ApplicationException("Refresh token is null"),
         });
 
         if (!tokenResult.IsError)
@@ -67,9 +67,9 @@ public class HomeController : Controller
 
             var tokens = new List<AuthenticationToken>
             {
-                new AuthenticationToken { Name = OpenIdConnectParameterNames.IdToken, Value = old_id_token },
-                new AuthenticationToken { Name = OpenIdConnectParameterNames.AccessToken, Value = new_access_token },
-                new AuthenticationToken { Name = OpenIdConnectParameterNames.RefreshToken, Value = new_refresh_token }
+                new() { Name = OpenIdConnectParameterNames.IdToken, Value = old_id_token! },
+                new() { Name = OpenIdConnectParameterNames.AccessToken, Value = new_access_token! },
+                new() { Name = OpenIdConnectParameterNames.RefreshToken, Value = new_refresh_token! }
             };
 
             var expiresAt = DateTime.UtcNow + TimeSpan.FromSeconds(tokenResult.ExpiresIn);
