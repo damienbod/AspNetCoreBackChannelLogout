@@ -25,6 +25,7 @@ dotnet ef database update -c PersistedGrantDbContext
 
 ## History
 
+- 2025-09-01 Updated packages
 - 2025-06-03 Updated .NET 9
 - 2024-11-03 Updated packages
 - 2024-08-29 Updated .NET 8, Duende IDP
