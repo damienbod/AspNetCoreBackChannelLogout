@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.10.35201.131
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11222.15 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StsServerIdentity", "StsServerIdentity\StsServerIdentity.csproj", "{62786040-0228-438F-B186-6EE2B02903E6}"
 EndProject
@@ -14,8 +14,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
 		README.md = README.md
 	EndProjectSection
-EndProject
-Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "AzureResourceGroupMvcHybridBackChannel", "AzureResourceGroupMvcHybridBackChannel\AzureResourceGroupMvcHybridBackChannel.deployproj", "{DED60CCB-4C2B-4B8B-96ED-CF722E029E3B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleStandaloneUsingAzureSecrets", "ConsoleStandaloneUsingAzureSecrets\ConsoleStandaloneUsingAzureSecrets.csproj", "{3142A077-E12B-4A6B-A98E-09F99ACFC788}"
 EndProject
@@ -37,10 +35,6 @@ Global
 		{5920113D-C5A5-41D2-9363-F998FFE6B830}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5920113D-C5A5-41D2-9363-F998FFE6B830}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5920113D-C5A5-41D2-9363-F998FFE6B830}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DED60CCB-4C2B-4B8B-96ED-CF722E029E3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DED60CCB-4C2B-4B8B-96ED-CF722E029E3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DED60CCB-4C2B-4B8B-96ED-CF722E029E3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DED60CCB-4C2B-4B8B-96ED-CF722E029E3B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3142A077-E12B-4A6B-A98E-09F99ACFC788}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3142A077-E12B-4A6B-A98E-09F99ACFC788}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3142A077-E12B-4A6B-A98E-09F99ACFC788}.Release|Any CPU.ActiveCfg = Release|Any CPU
