@@ -25,6 +25,7 @@ dotnet ef database update -c PersistedGrantDbContext
 
 ## History
 
+- 2025-12-08 Updated IdentityServer
 - 2025-12-08 Updated .NET 10
 - 2025-09-01 Updated packages
 - 2025-06-03 Updated .NET 9
