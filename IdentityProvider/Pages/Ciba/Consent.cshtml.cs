@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace IdentityServerAspNetIdentityPasskeys.Pages.Ciba;
+namespace IdentityServer.Pages.Ciba;
 
 [Authorize]
 [SecurityHeaders]

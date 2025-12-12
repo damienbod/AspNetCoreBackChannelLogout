@@ -5,7 +5,6 @@ using System.Globalization;
 using System.Text;
 using Duende.IdentityServer.Licensing;
 using IdentityServer;
-using IdentityServerAspNetIdentityPasskeys;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()

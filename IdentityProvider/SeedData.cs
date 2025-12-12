@@ -3,13 +3,13 @@
 
 using System.Security.Claims;
 using Duende.IdentityModel;
-using IdentityServerAspNetIdentityPasskeys.Data;
-using IdentityServerAspNetIdentityPasskeys.Models;
+using IdentityServer.Data;
+using IdentityServer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
-namespace IdentityServerAspNetIdentityPasskeys;
+namespace IdentityServer;
 
 public class SeedData
 {

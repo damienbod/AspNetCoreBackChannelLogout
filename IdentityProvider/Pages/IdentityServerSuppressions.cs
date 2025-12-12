@@ -19,26 +19,26 @@ using System.Diagnostics.CodeAnalysis;
 [assembly:
     SuppressMessage("Design", "CA1002:Do not expose generic lists",
         Justification = "TestUsers are not designed to be extended", Scope = "member",
-        Target = "~P:IdentityServerAspNetIdentityPasskeys.TestUsers.Users")]
+        Target = "~P:IdentityServer.TestUsers.Users")]
 [assembly:
     SuppressMessage("Design", "CA1034:Nested types should not be visible",
         Justification = "ExternalProvider is nested by design", Scope = "type",
-        Target = "~T:IdentityServerAspNetIdentityPasskeys.Pages.Login.ViewModel.ExternalProvider")]
+        Target = "~T:IdentityServer.Pages.Login.ViewModel.ExternalProvider")]
 [assembly:
     SuppressMessage("Naming", "CA1716:Identifiers should not match keywords",
         Justification = "This namespace is just for organization, and won't be referenced elsewhere",
-        Scope = "namespace", Target = "~N:IdentityServerAspNetIdentityPasskeys.Pages.Error")]
+        Scope = "namespace", Target = "~N:IdentityServer.Pages.Error")]
 [assembly:
     SuppressMessage("Naming", "CA1724:Type names should not match namespaces",
         Justification =
             "Namespaces of pages are not likely to be used elsewhere, so there is little chance of confusion",
-        Scope = "type", Target = "~T:IdentityServerAspNetIdentityPasskeys.Pages.Ciba.Consent")]
+        Scope = "type", Target = "~T:IdentityServer.Pages.Ciba.Consent")]
 [assembly:
     SuppressMessage("Naming", "CA1724:Type names should not match namespaces",
         Justification =
             "Namespaces of pages are not likely to be used elsewhere, so there is little chance of confusion",
-        Scope = "type", Target = "~T:IdentityServerAspNetIdentityPasskeys.Pages.Extensions")]
+        Scope = "type", Target = "~T:IdentityServer.Pages.Extensions")]
 [assembly:
     SuppressMessage("Performance", "CA1805:Do not initialize unnecessarily",
         Justification = "This is for clarity and consistency with the surrounding code", Scope = "member",
-        Target = "~F:IdentityServerAspNetIdentityPasskeys.Pages.Logout.LogoutOptions.AutomaticRedirectAfterSignOut")]
+        Target = "~F:IdentityServer.Pages.Logout.LogoutOptions.AutomaticRedirectAfterSignOut")]

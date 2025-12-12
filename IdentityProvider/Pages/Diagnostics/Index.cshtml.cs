@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace IdentityServerAspNetIdentityPasskeys.Pages.Diagnostics;
+namespace IdentityServer.Pages.Diagnostics;
 
 [SecurityHeaders]
 [Authorize]

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace IdentityServerAspNetIdentityPasskeys.Data.Migrations;
+namespace IdentityServer.Data.Migrations;
 
 /// <inheritdoc />
 public partial class IdentitySchemaVersion3 : Migration
