@@ -1,4 +1,6 @@
 using Duende.IdentityServer;
+using IdentityServer.Data;
+using IdentityServer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.JsonWebTokens;
@@ -14,24 +16,27 @@ internal static class HostingExtensions
 {
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
-        var stsConfig = builder.Configuration.GetSection("StsConfig");
-        builder.Services.Configure<StsConfig>(builder.Configuration.GetSection("StsConfig"));
-
-
-
         builder.Services.AddRazorPages();
 
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-        // AddDefaultUI() is not added, ASP.NET Core Identity Pages need to be added explicitly.
-        builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+        builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+        {
+            options.Stores.SchemaVersion = IdentitySchemaVersions.Version3;
+        })
             .AddEntityFrameworkStores<ApplicationDbContext>()
-            .AddDefaultTokenProviders()
-            .AddTokenProvider<Fido2UserTwoFactorTokenProvider>("FIDO2");
+            .AddDefaultTokenProviders();
 
-        builder.Services.Configure<Fido2Configuration>(builder.Configuration.GetSection("fido2"));
-        builder.Services.AddScoped<Fido2Store>();
+        if (builder.Environment.IsDevelopment())
+        {
+            builder.Services.Configure<IdentityPasskeyOptions>(options =>
+            {
+                // Allow https://localhost:5001 origin.
+                options.ValidateOrigin = context => ValueTask.FromResult(
+                    context.Origin == "https://localhost:5001");
+            });
+        }
 
         builder.Services
             .AddIdentityServer(options =>
@@ -41,27 +46,17 @@ internal static class HostingExtensions
                 options.Events.RaiseFailureEvents = true;
                 options.Events.RaiseSuccessEvents = true;
 
-                // see https://docs.duendesoftware.com/identityserver/v6/fundamentals/resources/
-                options.EmitStaticAudienceClaim = true;
+                // Use a large chunk size for diagnostic data in development where it will be redirected to a local file.
+                if (builder.Environment.IsDevelopment())
+                {
+                    options.Diagnostics.ChunkSize = 1024 * 1024 * 10; // 10 MB
+                }
             })
-            .AddInMemoryIdentityResources(Config.GetIdentityResources())
             .AddInMemoryApiResources(Config.GetApiResources())
             .AddInMemoryApiScopes(Config.GetApiScopes())
-            .AddInMemoryClients(Config.GetClients(stsConfig))
+            .AddInMemoryClients(Config.GetClients())
             .AddAspNetIdentity<ApplicationUser>()
-            .AddProfileService<IdentityWithAdditionalClaimsProfileService>();
-
-        builder.Services.AddAuthentication()
-            .AddGoogle(options =>
-            {
-                options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-
-                // register your IdentityServer with Google at https://console.developers.google.com
-                // enable the Google+ API
-                // set the redirect URI to https://localhost:5001/signin-google
-                options.ClientId = "copy client ID from Google here";
-                options.ClientSecret = "copy client secret from Google here";
-            });
+            .AddLicenseSummary();
 
         builder.Services.AddDistributedMemoryCache();
         builder.Services.AddSession(options =>

@@ -33,10 +33,11 @@ public class Config
     }
 
     // clients want to access resources (aka scopes)
-    public static IEnumerable<Client> GetClients(IConfiguration stsConfig)
+    public static IEnumerable<Client> GetClients()
     {
-        var mvcHybridBackchannelClientTwoUrl = stsConfig["MvcHybridBackchannelClientTwoUrl"];
-        var mvcHybridBackchannelClientUrl = stsConfig["MvcHybridBackchannelClientUrl"];
+        //var stsServerIdentityUrl = "https://localhost:44318";
+        var mvcHybridBackchannelClientUrl = "https://localhost:44327";
+        var mvcHybridBackchannelClientTwoUrl = "https://localhost:44387";
 
         return new List<Client>
         {
