@@ -1,6 +1,7 @@
 using IdentityModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
@@ -69,6 +70,8 @@ internal static class HostingExtensions
             options.Scope.Add("profile");
             options.Scope.Add("email");
             options.Scope.Add("offline_access");
+
+            options.PushedAuthorizationBehavior = PushedAuthorizationBehavior.Disable;
 
             options.ClaimActions.Remove("amr");
             options.ClaimActions.MapJsonKey("website", "website");

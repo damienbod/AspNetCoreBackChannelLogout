@@ -52,6 +52,7 @@ internal static class HostingExtensions
                     options.Diagnostics.ChunkSize = 1024 * 1024 * 10; // 10 MB
                 }
             })
+            .AddInMemoryIdentityResources(Config.IdentityResources)
             .AddInMemoryApiResources(Config.GetApiResources())
             .AddInMemoryApiScopes(Config.GetApiScopes())
             .AddInMemoryClients(Config.GetClients())

@@ -8,6 +8,15 @@ namespace StsServerIdentity;
 
 public class Config
 {
+    public static IEnumerable<IdentityResource> IdentityResources =>
+    new IdentityResource[]
+    {
+            new IdentityResources.OpenId(),
+            new IdentityResources.Profile(),
+            new IdentityResources.Email()
+    };
+
+
     public static IEnumerable<ApiScope> GetApiScopes()
     {
         return new List<ApiScope>
