@@ -10,3 +10,5 @@
 /_StsLogs.txt
 /_logs-**
 /StsServerIdentity/keys/**
+/IdentityProvider/keys/**
+/AspNetCoreBackChannelLogout.slnLaunch.user

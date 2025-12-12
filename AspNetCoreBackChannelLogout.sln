@@ -1,10 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.0.11222.15 d18.0
+VisualStudioVersion = 18.0.11222.15
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StsServerIdentity", "StsServerIdentity\StsServerIdentity.csproj", "{62786040-0228-438F-B186-6EE2B02903E6}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MvcHybridBackChannel", "MvcHybridBackChannel\MvcHybridBackChannel.csproj", "{1F0382CA-EB8C-4D9B-AC38-96D72C575B0F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MvcHybridBackChannelTwo", "MvcHybridBackChannelTwo\MvcHybridBackChannelTwo.csproj", "{5920113D-C5A5-41D2-9363-F998FFE6B830}"
@@ -17,16 +15,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleStandaloneUsingAzureSecrets", "ConsoleStandaloneUsingAzureSecrets\ConsoleStandaloneUsingAzureSecrets.csproj", "{3142A077-E12B-4A6B-A98E-09F99ACFC788}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer", "IdentityProvider\IdentityServer.csproj", "{A2E323F3-4AA0-B795-0153-6CB6081536E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{62786040-0228-438F-B186-6EE2B02903E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{62786040-0228-438F-B186-6EE2B02903E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{62786040-0228-438F-B186-6EE2B02903E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{62786040-0228-438F-B186-6EE2B02903E6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1F0382CA-EB8C-4D9B-AC38-96D72C575B0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1F0382CA-EB8C-4D9B-AC38-96D72C575B0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F0382CA-EB8C-4D9B-AC38-96D72C575B0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +35,10 @@ Global
 		{3142A077-E12B-4A6B-A98E-09F99ACFC788}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3142A077-E12B-4A6B-A98E-09F99ACFC788}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3142A077-E12B-4A6B-A98E-09F99ACFC788}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2E323F3-4AA0-B795-0153-6CB6081536E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2E323F3-4AA0-B795-0153-6CB6081536E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2E323F3-4AA0-B795-0153-6CB6081536E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2E323F3-4AA0-B795-0153-6CB6081536E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
