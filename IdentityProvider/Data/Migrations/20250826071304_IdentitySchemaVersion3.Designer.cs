@@ -20,7 +20,7 @@ namespace IdentityServer.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.0-preview.7.25380.108");
 
-            modelBuilder.Entity("IdentityServerAspNetIdentityPasskeys.Models.ApplicationUser", b =>
+            modelBuilder.Entity("IdentityServer.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("TEXT");
@@ -245,7 +245,7 @@ namespace IdentityServer.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("IdentityServerAspNetIdentityPasskeys.Models.ApplicationUser", null)
+                    b.HasOne("IdentityServer.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -254,7 +254,7 @@ namespace IdentityServer.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("IdentityServerAspNetIdentityPasskeys.Models.ApplicationUser", null)
+                    b.HasOne("IdentityServer.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -263,7 +263,7 @@ namespace IdentityServer.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserPasskey<string>", b =>
                 {
-                    b.HasOne("IdentityServerAspNetIdentityPasskeys.Models.ApplicationUser", null)
+                    b.HasOne("IdentityServer.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -329,7 +329,7 @@ namespace IdentityServer.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("IdentityServerAspNetIdentityPasskeys.Models.ApplicationUser", null)
+                    b.HasOne("IdentityServer.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -338,7 +338,7 @@ namespace IdentityServer.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("IdentityServerAspNetIdentityPasskeys.Models.ApplicationUser", null)
+                    b.HasOne("IdentityServer.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
