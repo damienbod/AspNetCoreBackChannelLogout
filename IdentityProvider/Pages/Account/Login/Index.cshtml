@@ -1,13 +1,11 @@
 @page
-@using IdentityServer.Passkeys
-@model IdentityServer.Pages.Login.Index
+@using Idp.Swiyu.Passkeys.Sts.Passkeys
+@model Idp.Swiyu.Passkeys.Sts.Pages.Login.Index
+
+<h3>Login</h3>
 
 <div class="login-page">
-    <div class="lead">
-        <h1>Login</h1>
-        <p>Choose how to login</p>
-    </div>
-
+   
     <partial name="_ValidationSummary"/>
 
     <div class="row">
@@ -17,7 +15,7 @@
             <div class="col-sm-6">
                 <div class="card">
                     <div class="card-header">
-                        <h2>Local Account</h2>
+                        <h3>Local Account</h3>
                     </div>
 
                     <div class="card-body">
@@ -50,10 +48,32 @@
 
                             <hr />
 
-                            <passkey-submit operation="@PasskeyOperation.Request" name="Input.Passkey" email-name="Input.Username" class="btn btn-outline-primary position-relative" formnovalidate>
+                            <passkey-submit operation="@PasskeyOperation.Request" name="Input.Passkey" email-name="Input.Username" class="btn btn-outline-primary col-sm-8 col-md-4" formnovalidate>
                               Log in with a passkey
                             </passkey-submit>
                           </form>
+
+                          <div class="form-floating mt-3">
+                            <a class="btn btn-outline-primary col-sm-8 col-md-4"
+                                asp-page="/Swiyu/Login"
+                                asp-route-returnUrl="@Model.Input.ReturnUrl">
+                                Log in with E-ID
+                            </a>
+                          </div>
+
+                          <hr />
+
+                          <div>
+                            <p>
+                                <a id="forgot-password" asp-page="/Account/ForgotPassword">Forgot your password?</a>
+                            </p>
+                            <p>
+                                <a asp-page="/Account/Register" asp-route-returnUrl="@Model.Input.ReturnUrl">Register as a new user</a>
+                            </p>
+                            <p>
+                                <a id="resend-confirmation" asp-page="/Account/ResendEmailConfirmation">Resend email confirmation</a>
+                            </p>
+                          </div>
                     </div>
                 </div>
             </div>
@@ -64,7 +84,7 @@
             <div class="col-sm-6">
                 <div class="card">
                     <div class="card-header">
-                        <h2>External Account</h2>
+                        <h3>External Account</h3>
                     </div>
                     <div class="card-body">
                         <ul class="list-inline">

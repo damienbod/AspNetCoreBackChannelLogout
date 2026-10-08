@@ -1,15 +1,15 @@
 // Copyright (c) Duende Software. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
-using System.Buffers.Text;
-using IdentityServer.Data;
-using IdentityServer.Models;
+using Idp.Swiyu.Passkeys.Sts.Domain;
+using Idp.Swiyu.Passkeys.Sts.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System.Buffers.Text;
 
-namespace IdentityServer.Pages.Account;
+namespace Idp.Swiyu.Passkeys.Sts.Pages.Account;
 
 public class RenamePasskeyModel : PageModel
 {

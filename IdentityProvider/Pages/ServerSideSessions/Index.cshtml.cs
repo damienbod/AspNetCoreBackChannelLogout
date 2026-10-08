@@ -7,7 +7,7 @@ using Duende.IdentityServer.Stores;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace IdentityServer.Pages.ServerSideSessions;
+namespace Idp.Swiyu.Passkeys.Sts.Pages.ServerSideSessions;
 
 public class IndexModel : PageModel
 {
@@ -45,7 +45,7 @@ public class IndexModel : PageModel
                 DisplayName = DisplayNameFilter,
                 SessionId = SessionIdFilter,
                 SubjectId = SubjectIdFilter
-            });
+            }, HttpContext.RequestAborted);
         }
 
         return Page();
@@ -66,7 +66,7 @@ public class IndexModel : PageModel
         await _sessionManagementService.RemoveSessionsAsync(new RemoveSessionsContext
         {
             SessionId = SessionId,
-        });
+        }, HttpContext.RequestAborted);
 
         return RedirectToPage("/ServerSideSessions/Index",
             new { Token, DisplayNameFilter, SessionIdFilter, SubjectIdFilter, Prev });

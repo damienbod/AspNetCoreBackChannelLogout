@@ -6,7 +6,7 @@ using Duende.IdentityServer.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace IdentityServer.Pages.Ciba;
+namespace Idp.Swiyu.Passkeys.Sts.Pages.Ciba;
 
 [SecurityHeaders]
 [Authorize]
@@ -20,5 +20,5 @@ public class AllModel : PageModel
         _backchannelAuthenticationInteraction = backchannelAuthenticationInteractionService;
 
     public async Task OnGet() =>
-        Logins = await _backchannelAuthenticationInteraction.GetPendingLoginRequestsForCurrentUserAsync();
+        Logins = await _backchannelAuthenticationInteraction.GetPendingLoginRequestsForCurrentUserAsync(HttpContext.RequestAborted);
 }

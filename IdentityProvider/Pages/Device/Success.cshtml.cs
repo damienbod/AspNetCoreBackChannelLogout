@@ -4,7 +4,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace IdentityServer.Pages.Device;
+namespace Idp.Swiyu.Passkeys.Sts.Pages.Device;
 
 [SecurityHeaders]
 [Authorize]

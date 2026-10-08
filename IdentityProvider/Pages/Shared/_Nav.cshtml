@@ -8,28 +8,52 @@
     }
 }
 
-<div class="nav-page">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<div class="sidebar-top-row">
+    <a class="navbar-brand" href="~/">
+        <img src="~/damienbod-icon.png" class="brand-icon" alt="damienbod" />
+        IDP IAM
+    </a>
+</div>
 
-        <a href="~/" class="navbar-brand">
-            <img src="~/duende-logo.svg" class="icon-banner">
-            Duende IdentityServer
-        </a>
+<input type="checkbox" title="Navigation menu" class="navbar-toggler"/>
 
-        @if (!string.IsNullOrWhiteSpace(name))
+<div class="nav-scrollable">
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <a class="nav-link" href="~/">Home</a>
+        </div>
+
+        @if (name != null)
         {
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                        @name <b class="caret"></b>
-                    </a>
+            <div class="nav-item px-3">
+                <a class="nav-link" href="~/grants">Grants</a>
+            </div>
 
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" asp-page="/Account/Logout/Index">Logout</a>
-                    </div>
-                </li>
-            </ul>
+            @*  // hide, only available in debug
+            <div class="nav-item px-3">
+                <a class="nav-link" href="~/diagnostics">Diagnostics</a>
+            </div>
+
+            <div class="nav-item px-3">
+                <a class="nav-link" href="~/serversidesessions">Sessions</a>
+            </div> 
+            *@
+
+            <div class="nav-item px-3">
+                <a class= "nav-link" href = "~/Account/Manage" >Account</a>
+            </div>
+
+            <div class="nav-item px-3">
+                <a class="nav-link" href="~/account/passkeys">Passkeys</a>
+            </div>
+
+            <div class="nav-item px-3">
+                <a class="nav-link" href="~/Swiyu/Register">Swiyu</a>
+            </div>
+
+            <div class="nav-item px-3">
+                <a class="nav-link" asp-page="/Account/Logout/Index">Logout</a>
+            </div>
         }
-
     </nav>
 </div>

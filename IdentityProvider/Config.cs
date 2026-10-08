@@ -4,7 +4,7 @@
 using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
 
-namespace StsServerIdentity;
+namespace Idp.Swiyu.Passkeys.Sts;
 
 public class Config
 {

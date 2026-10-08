@@ -1,0 +1,47 @@
+﻿@page
+@model Idp.Swiyu.Passkeys.Sts.Pages.Login.LoginModel
+@{
+}
+
+<div class="container my-5 swiyu-page">
+   
+    <div class="row justify-content-center mt-4" id="qrCodeImage">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-sm swiyu-qr-card">
+                <div class="card-body text-center">
+
+                @if (Model.QrCodePng!.Length > 0)
+                {
+                    <h5 class="card-title">Scan with your swiyu wallet</h5>
+                    <div class="swiyu-qr-wrapper">
+                        <img alt="QR code for swiyu verification"
+                                src="data:image/png;base64,@System.Convert.ToBase64String(Model.QrCodePng)"
+                                class="img-fluid" />
+                    </div>
+                    <div>
+                        <a class="swiyu-deeplink" href="@Model.DeepLink">Open in wallet</a>
+                    </div>
+
+                }
+                    
+                    <a class="btn btn-link" asp-page="/Swiyu/Register">Don't have an E-ID yet? Register E-ID</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (Model.VerificationId != null)
+    {
+        <form method="post" id="pollSwiyu" name="pollSwiyu">
+            <input type="hidden" asp-for="ReturnUrl" />
+            <input type="hidden" id="verificationId" name="verificationId"  asp-for="VerificationId" />
+            <button type="submit" id="buttonPollSwiyu" name="buttonPollSwiyu" class="btn btn-outline-dark display-none">Start polling</button>
+        </form>
+    }
+
+
+</div>
+
+@section scripts {
+    <script src="~/verifier-swiyu.js"></script>
+}

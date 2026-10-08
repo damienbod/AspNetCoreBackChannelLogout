@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace IdentityServer.Pages.ExternalLogin;
+namespace Idp.Swiyu.Passkeys.Sts.Pages.ExternalLogin;
 
 [AllowAnonymous]
 [SecurityHeaders]

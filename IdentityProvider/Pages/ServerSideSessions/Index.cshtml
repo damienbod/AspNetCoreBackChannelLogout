@@ -1,14 +1,13 @@
 @page
-@model IdentityServer.Pages.ServerSideSessions.IndexModel
+@model Idp.Swiyu.Passkeys.Sts.Pages.ServerSideSessions.IndexModel
+
+<h3>User Sessions</h3>
 
 <div class="users-page">
     <div class="row">
         <div class="col">
             <div class="card">
-                <div class="card-header">
-                    <h2>User Sessions</h2>
-                </div>
-
+                
                 <div class="card-body">
 
                     @if (Model.UserSessions != null)

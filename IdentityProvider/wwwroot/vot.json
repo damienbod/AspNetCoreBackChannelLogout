@@ -1,0 +1,151 @@
+{
+  "title": "Vectors of Trust (VoT) - RFC 8485",
+  "description": "Vector of Trust definitions based on RFC 8485 (https://www.rfc-editor.org/rfc/rfc8485.html)",
+  "identityProofing": {
+    "P0": {
+      "code": "P0",
+      "name": "No Proofing",
+      "description": "No proofing is done, and data is not guaranteed to be persistent across sessions"
+    },
+    "P1": {
+      "code": "P1",
+      "name": "Self-Asserted",
+      "description": "Attributes are self-asserted but consistent over time, potentially pseudonymous"
+    },
+    "P2": {
+      "code": "P2",
+      "name": "Trusted Mechanisms",
+      "description": "Identity has been proofed either in person or remotely using trusted mechanisms (such as social proofing)"
+    },
+    "P3": {
+      "code": "P3",
+      "name": "Binding Relationship",
+      "description": "There is a binding relationship between the identity provider and the identified party (such as signed/notarized documents and employment records)"
+    }
+  },
+  "primaryCredentialUsage": {
+    "C0": {
+      "code": "C0",
+      "name": "No Credential",
+      "description": "No credential is used / anonymous public service"
+    },
+    "Ca": {
+      "code": "Ca",
+      "name": "Session Cookies",
+      "description": "Simple session HTTP cookies (with nothing else)"
+    },
+    "Cb": {
+      "code": "Cb",
+      "name": "Known Device",
+      "description": "Known device, such as those indicated through device posture or device management systems"
+    },
+    "Cc": {
+      "code": "Cc",
+      "name": "Shared Secret",
+      "description": "Shared secret, such as a username and password combination"
+    },
+    "Cd": {
+      "code": "Cd",
+      "name": "Shared Key Proof",
+      "description": "Cryptographic proof of key possession using shared key"
+    },
+    "Ce": {
+      "code": "Ce",
+      "name": "Asymmetric Key Proof",
+      "description": "Cryptographic proof of key possession using asymmetric key"
+    },
+    "Cf": {
+      "code": "Cf",
+      "name": "Hardware Token",
+      "description": "Sealed hardware token / keys stored in a trusted platform module"
+    },
+    "Cg": {
+      "code": "Cg",
+      "name": "Biometric",
+      "description": "Locally verified biometric"
+    }
+  },
+  "primaryCredentialManagement": {
+    "Ma": {
+      "code": "Ma",
+      "name": "Self-Asserted Credentials",
+      "description": "Self-asserted primary credentials (user chooses their own credentials and must rotate or revoke them manually) / no additional verification for primary credential issuance or rotation"
+    },
+    "Mb": {
+      "code": "Mb",
+      "name": "Remote Issuance",
+      "description": "Remote issuance and rotation / use of backup recovery credentials (such as email verification) / deletion on user request"
+    },
+    "Mc": {
+      "code": "Mc",
+      "name": "Full Proofing Required",
+      "description": "Full proofing required for each issuance and rotation / revocation on suspicious activity"
+    }
+  },
+  "assertionPresentation": {
+    "Aa": {
+      "code": "Aa",
+      "name": "No Protection",
+      "description": "No protection / unsigned bearer identifier (such as an HTTP session cookie in a web browser)"
+    },
+    "Ab": {
+      "code": "Ab",
+      "name": "User Agent Assertion",
+      "description": "Signed and verifiable assertion, passed through the user agent (web browser)"
+    },
+    "Ac": {
+      "code": "Ac",
+      "name": "Back Channel Assertion",
+      "description": "Signed and verifiable assertion, passed through a back channel"
+    },
+    "Ad": {
+      "code": "Ad",
+      "name": "Encrypted Assertion",
+      "description": "Assertion encrypted to the RP's key"
+    }
+  },
+  "examples": {
+    "openIdVpPasskeys": {
+      "scenario": "OpenID VP with Passkeys",
+      "identityProofing": "OpenIDVP",
+      "credential": "Passkeys",
+      "vot": "P3.Cf.Ma.Ac"
+    },
+    "emailPasskeys": {
+      "scenario": "Email with Passkeys",
+      "identityProofing": "Email",
+      "credential": "Passkeys",
+      "vot": "P1.Cf.Ma.Ac"
+    },
+    "emailPassword": {
+      "scenario": "Email with Password",
+      "identityProofing": "Email",
+      "credential": "Password",
+      "vot": "P1.Cc.Ma.Ac"
+    },
+    "openIdVpPassword": {
+      "scenario": "OpenID VP with Password",
+      "identityProofing": "OpenIDVP",
+      "credential": "Password",
+      "vot": "P3.Cc.Ma.Ac"
+    },
+    "openIdVpOpenIdVp": {
+      "scenario": "OpenID VP with OpenID VP",
+      "identityProofing": "OpenIDVP",
+      "credential": "OpenIDVP",
+      "vot": "P3.Ce.Ma.Ac"
+    },
+    "openIdVpPasswordOpenIdVp": {
+      "scenario": "OpenID VP with Password and OpenID VP",
+      "identityProofing": "OpenIDVP",
+      "credential": "Password, OpenIDVP",
+      "vot": "P3.Ce.Cc.Ma.Ac"
+    },
+    "openIdVpPasswordPasskeys": {
+      "scenario": "OpenID VP with Password and Passkeys",
+      "identityProofing": "OpenIDVP",
+      "credential": "Password, passkeys",
+      "vot": "P3.Cf.Cc.Ma.Ac"
+    }
+  }
+}

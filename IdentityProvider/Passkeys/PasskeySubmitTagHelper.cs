@@ -4,7 +4,7 @@
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace IdentityServer.Passkeys;
+namespace Idp.Swiyu.Passkeys.Sts.Passkeys;
 
 [HtmlTargetElement("passkey-submit")]
 public class PasskeySubmitTagHelper : TagHelper

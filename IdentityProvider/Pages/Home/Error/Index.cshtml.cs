@@ -5,7 +5,7 @@ using Duende.IdentityServer.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace IdentityServer.Pages.Error;
+namespace Idp.Swiyu.Passkeys.Sts.Pages.Error;
 
 [AllowAnonymous]
 [SecurityHeaders]
@@ -25,7 +25,7 @@ public class Index : PageModel
     public async Task OnGet(string? errorId)
     {
         // retrieve error details from identityserver
-        var message = await _interaction.GetErrorContextAsync(errorId);
+        var message = await _interaction.GetErrorContextAsync(errorId, HttpContext.RequestAborted);
         if (message != null)
         {
             View.Error = message;

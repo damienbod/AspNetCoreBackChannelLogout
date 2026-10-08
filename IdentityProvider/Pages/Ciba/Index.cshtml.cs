@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace IdentityServer.Pages.Ciba;
+namespace Idp.Swiyu.Passkeys.Sts.Pages.Ciba;
 
 [AllowAnonymous]
 [SecurityHeaders]
@@ -27,7 +27,7 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnGet(string id)
     {
-        var result = await _backchannelAuthenticationInteraction.GetLoginRequestByInternalIdAsync(id);
+        var result = await _backchannelAuthenticationInteraction.GetLoginRequestByInternalIdAsync(id, HttpContext.RequestAborted);
         if (result == null)
         {
             _logger.InvalidBackchannelLoginId(id);

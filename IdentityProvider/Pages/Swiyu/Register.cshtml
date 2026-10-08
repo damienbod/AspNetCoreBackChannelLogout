@@ -1,0 +1,88 @@
+﻿@page
+@model Idp.Swiyu.Passkeys.Sts.Pages.Swiyu.RegisterModel
+@{
+    ViewData["Title"] = "Register swiyu public Beta-ID";
+}
+
+<div class="container my-5 swiyu-page">
+    <div class="row justify-content-center" id="verifiedDataButton">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary-card text-white">
+                    <h4 class="mb-0">@ViewData["Title"]</h4>
+                </div>
+                <div class="card-body">
+                    <p class="mb-3 text-muted">
+                        Verify your identity by presenting your swiyu public Beta-ID credential.
+                    </p>
+                    <form method="post">
+                        <button class="display-none" type="submit">
+                            Verify your swiyu public Beta-ID
+                        </button>
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <h6 class="text-muted mb-2">Resources</h6>
+                    <ul class="swiyu-resource-list">
+                        <li>
+                            <a href="https://www.bcs.admin.ch/bcs-web/" target="_blank" rel="noopener noreferrer">
+                                Get your swiyu public Beta-ID credentials
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.eid.admin.ch/de/public-beta" target="_blank" rel="noopener noreferrer">
+                                Download swiyu wallet
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="display-none" id="verifiedDataCard">
+        <div>
+            <div>
+                <div>
+                    <h4 class="mb-0">Verified swiyu public Beta-ID data</h4>
+                </div>
+                <div>
+                    <div id="verifiedData"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (Model.QrCodePng.Length > 0)
+    {
+        <div class="row justify-content-center mt-4" id="qrCodeImage">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow-sm swiyu-qr-card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Scan with your swiyu wallet</h5>
+                        <div class="swiyu-qr-wrapper">
+                            <img alt="QR code for swiyu verification"
+                                 src="data:image/png;base64,@System.Convert.ToBase64String(Model.QrCodePng)"
+                                 class="img-fluid" />
+                        </div>
+                        <div>
+                            <a class="swiyu-deeplink" href="@Model.DeepLink">Open in wallet</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (Model.VerificationId != null)
+    {
+        <form method="post" id="pollSwiyu" name="pollSwiyu">
+            <input type="hidden" id="verificationId" name="verificationId" asp-for="VerificationId" />
+            <button type="summit" id="buttonPollSwiyu" name="buttonPollSwiyu" class="btn btn-outline-dark display-none">Start polling</button>
+        </form>
+    }
+</div>
+
+@section scripts {
+    <script src="~/verifier-swiyu.js"></script>
+}

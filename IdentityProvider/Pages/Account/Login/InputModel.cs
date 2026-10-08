@@ -1,10 +1,10 @@
 // Copyright (c) Duende Software. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
+using Idp.Swiyu.Passkeys.Sts.Domain.Models;
 using System.ComponentModel.DataAnnotations;
-using IdentityServer.Models;
 
-namespace IdentityServer.Pages.Login;
+namespace Idp.Swiyu.Passkeys.Sts.Pages.Login;
 
 public class InputModel
 {

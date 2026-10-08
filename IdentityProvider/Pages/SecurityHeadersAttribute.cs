@@ -4,7 +4,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace IdentityServer.Pages;
+namespace Idp.Swiyu.Passkeys.Sts.Pages;
 
 public sealed class SecurityHeadersAttribute : ActionFilterAttribute
 {

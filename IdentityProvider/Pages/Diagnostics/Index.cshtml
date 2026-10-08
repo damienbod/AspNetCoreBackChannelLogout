@@ -1,16 +1,15 @@
 @page
-@model IdentityServer.Pages.Diagnostics.Index
+@model Idp.Swiyu.Passkeys.Sts.Pages.Diagnostics.Index
+
+<h3>Authentication Cookie</h3>
 
 <div class="diagnostics-page">
-    <div class="lead">
-        <h1>Authentication Cookie</h1>
-    </div>
 
     <div class="row">
         <div class="col">
             <div class="card">
                 <div class="card-header">
-                    <h2>Claims</h2>
+                    <h3>Claims</h3>
                 </div>
                 <div class="card-body">
                     @if (Model.View.AuthenticateResult.Principal != null)
@@ -30,7 +29,7 @@
         <div class="col">
             <div class="card">
                 <div class="card-header">
-                    <h2>Properties</h2>
+                    <h3>Properties</h3>
                 </div>
                 <div class="card-body">
                     <dl>

@@ -1,12 +1,8 @@
 @page
-@model IdentityServer.Pages.Home.Index
+@model Idp.Swiyu.Passkeys.Sts.Pages.Home.Index
 
 <div class="welcome-page">
-    <h1>
-        <img src="~/duende-logo.svg" class="logo">
-        Welcome to Duende IdentityServer
-        <small class="text-muted">(version @Model.Version)</small>
-    </h1>
+    <h1>IdentityServer with support for swiyu and passkeys</h1>
 
     <ul>
         <li>
@@ -29,21 +25,5 @@
         <li>
           Click <a href="~/account/passkeys">here</a> to manage your passkeys.
         </li>
-        <li>
-            Here are links to the
-            <a href="https://github.com/duendesoftware/IdentityServer">source code repository</a>,
-            and <a href="https://github.com/duendesoftware/samples">ready to use samples</a>.
-        </li>
     </ul>
-
-    @if (Model.License != null)
-    {
-        <h2>License</h2>
-        <dl>
-            <dt>Serial Number</dt>
-            <dd>@Model.License.SerialNumber</dd>
-            <dt>Expiration</dt>
-            <dd>@Model.License.Expiration!.Value.ToLongDateString()</dd>
-        </dl>
-    }
 </div>

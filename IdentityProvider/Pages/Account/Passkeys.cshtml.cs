@@ -1,14 +1,14 @@
 // Copyright (c) Duende Software. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
-using System.Buffers.Text;
-using System.Diagnostics.CodeAnalysis;
-using IdentityServer.Models;
+using Idp.Swiyu.Passkeys.Sts.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Buffers.Text;
+using System.Diagnostics.CodeAnalysis;
 
-namespace IdentityServer.Pages.Account;
+namespace Idp.Swiyu.Passkeys.Sts.Pages.Account;
 
 public class PasskeysModel : PageModel
 {

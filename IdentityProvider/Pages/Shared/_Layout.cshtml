@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
 
-    <title>Duende IdentityServer</title>
+    <title>IdentityServer, Identity management with support for swiyu</title>
 
     <link rel="icon" type="image/x-icon" href="~/favicon.ico"/>
     <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico"/>
@@ -15,10 +15,28 @@
     <link rel="stylesheet" href="~/css/site.css"/>
 </head>
 <body>
-<partial name="_Nav"/>
+@{
+#nullable enable
+    var topRowName = Context.User?.Identity?.IsAuthenticated == true ? Context.User.Identity.Name : null;
+}
+<div class="page">
+    <div class="sidebar">
+        <partial name="_Nav"/>
+    </div>
 
-<div class="container body-container">
-    @RenderBody()
+    <main>
+        <div class="top-row px-4">
+            @if (topRowName != null)
+            {
+                <a class="top-row-link" asp-page="/Account/Manage/Index">@topRowName</a>
+                <a class="top-row-link" asp-page="/Account/Logout/Index">Logout</a>
+            }
+        </div>
+
+        <article class="content px-4 body-container">
+            @RenderBody()
+        </article>
+    </main>
 </div>
 
 <script src="~/lib/jquery/dist/jquery.slim.min.js"></script>

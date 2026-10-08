@@ -1,11 +1,8 @@
 @page
-@model IdentityServer.Pages.Logout.LoggedOut
+@model Idp.Swiyu.Passkeys.Sts.Pages.Logout.LoggedOut
 
 <div class="logged-out-page">
-    <h1>
-        Logout
-        <small>You are now logged out</small>
-    </h1>
+    <h3>You are now logged out</h3>
 
     @if (Model.View.PostLogoutRedirectUri != null)
     {

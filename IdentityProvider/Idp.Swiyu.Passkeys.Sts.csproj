@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UserSecretsId>c953797d-bdc6-46c1-85e4-68b8f5a2d4c4</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Duende.IdentityServer.AspNetIdentity" version="8.0.9" />
+    <PackageReference Include="Microsoft.Data.SqlClient.Extensions.Azure" Version="7.1.1" />
+    <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
+
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="10.0.12" />
+
+    <PackageReference Include="Net.Codecrete.QrCodeGenerator" Version="3.2.1" />
+    <PackageReference Include="Magick.NET-Q16-AnyCPU" Version="14.17.2" />
+
+    <PackageReference Include="Sendgrid" Version="9.29.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Idp.Swiyu.Passkeys.Sts.Domain\Idp.Swiyu.Passkeys.Sts.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
