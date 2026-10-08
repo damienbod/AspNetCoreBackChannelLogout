@@ -16,7 +16,6 @@ public class Config
             new IdentityResources.Email()
     };
 
-
     public static IEnumerable<ApiScope> GetApiScopes()
     {
         return new List<ApiScope>
@@ -64,7 +63,7 @@ public class Config
 
                 RedirectUris = { $"{mvcHybridBackchannelClientUrl}/signin-oidc" },
                 BackChannelLogoutSessionRequired = true,
-                BackChannelLogoutUri = $"{mvcHybridBackchannelClientUrl}/logout",
+                BackChannelLogoutUri = $"{mvcHybridBackchannelClientUrl}/backchannellogout",
                 PostLogoutRedirectUris = { $"{mvcHybridBackchannelClientUrl}/signout-callback-oidc" },
 
                 AllowedScopes =
@@ -88,7 +87,7 @@ public class Config
                 UpdateAccessTokenClaimsOnRefresh = true,
 
                 RedirectUris = { $"{mvcHybridBackchannelClientTwoUrl}/signin-oidc" },
-                BackChannelLogoutUri = $"{mvcHybridBackchannelClientTwoUrl}/logout",
+                BackChannelLogoutUri = $"{mvcHybridBackchannelClientTwoUrl}/backchannellogout",
                 BackChannelLogoutSessionRequired = true,
                 PostLogoutRedirectUris = { $"{mvcHybridBackchannelClientTwoUrl}/signout-callback-oidc" },
 
