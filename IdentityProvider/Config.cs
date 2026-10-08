@@ -43,7 +43,7 @@ public class Config
     // clients want to access resources (aka scopes)
     public static IEnumerable<Client> GetClients()
     {
-        //var stsServerIdentityUrl = "https://localhost:44318";
+        //var stsServerIdentityUrl = "https://localhost:5001";
         var mvcHybridBackchannelClientUrl = "https://localhost:44327";
         var mvcHybridBackchannelClientTwoUrl = "https://localhost:44387";
 
