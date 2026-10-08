@@ -28,8 +28,7 @@ public class CookieEventHandler : CookieAuthenticationEvents
             {
                 context.RejectPrincipal();
 
-                await context.HttpContext.SignOutAsync("SchemeOne");
-                await context.HttpContext.SignOutAsync("SchemeTwo");
+                await context.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
                 await _logoutSessionManager.RemoveAsync(sub, sid);
             }
