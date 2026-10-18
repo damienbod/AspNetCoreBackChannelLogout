@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".github/workflows/dotnet.yml" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="ConsoleStandaloneUsingAzureSecrets/ConsoleStandaloneUsingAzureSecrets.csproj" />
+  <Project Path="IdentityProvider/Idp.Swiyu.Passkeys.Sts.csproj" />
+  <Project Path="Idp.Swiyu.Passkeys.Sts.Domain.Migrations/Idp.Swiyu.Passkeys.Sts.Domain.Migrations.csproj" />
+  <Project Path="Idp.Swiyu.Passkeys.Sts.Domain/Idp.Swiyu.Passkeys.Sts.Domain.csproj" />
+  <Project Path="MvcHybridBackChannel/MvcHybridBackChannel.csproj" />
+  <Project Path="MvcHybridBackChannelTwo/MvcHybridBackChannelTwo.csproj" />
+</Solution>
