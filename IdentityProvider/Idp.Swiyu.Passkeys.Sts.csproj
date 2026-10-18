@@ -7,14 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Duende.IdentityServer.AspNetIdentity" version="8.0.9" />
+    <PackageReference Include="Duende.IdentityServer.AspNetIdentity" version="8.0.10" />
     <PackageReference Include="Microsoft.Data.SqlClient.Extensions.Azure" Version="7.1.1" />
     <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
 
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="10.0.12" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="10.0.13" />
 
     <PackageReference Include="Net.Codecrete.QrCodeGenerator" Version="3.2.1" />
-    <PackageReference Include="Magick.NET-Q16-AnyCPU" Version="14.17.2" />
+    <PackageReference Include="Magick.NET-Q16-AnyCPU" Version="15.0.0" />
 
     <PackageReference Include="Sendgrid" Version="9.29.3" />
   </ItemGroup>
